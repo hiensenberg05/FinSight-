@@ -10,6 +10,7 @@
 [![Playwright](https://img.shields.io/badge/Playwright-Chromium-2EAD33.svg)](https://playwright.dev/)
 [![Slack](https://img.shields.io/badge/Slack-Block_Kit_Sentinel-4A154B.svg)](https://slack.com/)
 [![Tests](https://img.shields.io/badge/Tests-40%2F40_Passing-brightgreen.svg)]()
+[![Technical Report](https://img.shields.io/badge/Technical_Report-PDF_Download-red.svg)](FinSight_Technical_Report.pdf)
 
 ---
 
