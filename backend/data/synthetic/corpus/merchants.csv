@@ -1,0 +1,125 @@
+id,canonical_name,normalized_key,default_category_slug
+2d9d9950-f077-466a-bb07-007fe64b2e11,Swiggy,swiggy,food--dining
+4b3b9dd0-57fe-4654-be16-c09c44560bb6,Zomato,zomato,food--dining
+dd3ab1ae-ef4c-43ab-9b5b-5a7ac85900de,Starbucks,starbucks,food--dining
+4c93b25e-4fb3-4696-a197-84028bbd3d30,Chai Point,chai-point,food--dining
+879ed873-b02c-4452-b5db-10a2a363378c,Subway,subway,food--dining
+33e182c9-3713-43d9-94b5-cbb611549847,Third Wave Coffee,third-wave,food--dining
+4453d0b2-a6dc-4361-92d8-a537f956cc99,Haldiram,haldiram,food--dining
+6085afc1-a382-46a1-824d-1303b1e2ae0c,Dominos Pizza,dominos,food--dining
+d31a0ae0-933c-4192-ae79-f0ae56ac073b,Burger King,burger-king,food--dining
+de4f23fc-882a-4824-9f08-f8e923455cc1,Barbeque Nation,barbeque-nation,food--dining
+67228243-5c81-4851-a4dc-4ecceb57b095,Paradise Biryani,paradise-biryani,food--dining
+627c297e-47eb-468a-babf-8f957a54efd2,Bhartiya Jalpan,bhartiya-jalpan,food--dining
+23b6f71d-673f-4fae-ba73-28863d910fe9,KFC India,kfc,food--dining
+655a7c56-dff0-42d0-b456-2ee5a00cbe26,McDonalds India,mcdonalds,food--dining
+53b5b0b6-5488-4f5a-b7b5-f483fa0628d3,Pizza Hut,pizza-hut,food--dining
+e51cfbeb-ec12-48bf-b184-1f8f241519ad,Blue Tokai Coffee,blue-tokai,food--dining
+d557a381-8a0f-49b3-b5c9-1d8e2b3239ba,Behrouz Biryani,behrouz-biryani,food--dining
+91dfa605-3b69-4da0-b753-d7eb25cc34e2,Faasos,faasos,food--dining
+259231b4-434b-40c7-a841-d392678a1dfa,Truffles Cafe,truffles,food--dining
+3abce054-6f1a-4119-8f29-0f1afc0782a7,Nandhini Deluxe,nandhini,food--dining
+30b93f8f-e365-478a-a963-4983027ef232,Blinkit,blinkit,groceries
+ee5e6e49-d560-41fc-a313-67a6510b5815,Zepto,zepto,groceries
+6fb14cb5-7f24-4d25-8bb7-7f979a653011,Instamart,instamart,groceries
+2e2428b7-e3a8-4e29-9cc7-c0369c9565a4,BigBasket,bigbasket,groceries
+a61f1f7b-2858-4df9-9627-0913b44bb97e,Nature Basket,nature-basket,groceries
+a63b7581-d00d-4940-8428-3348cb97f049,Star Bazaar,star-bazaar,groceries
+6387834e-0f78-4e23-9989-b95c48ed781b,DMart,dmart,groceries
+dda3946e-1f86-4a82-a2f9-9774757c40af,More Supermarket,more-supermarket,groceries
+e6db2868-0a1b-4f74-88f0-bb014d49d6f4,Spencer Retail,spencers,groceries
+63bb1d1e-8d0a-4386-b2d2-e8aa70b4e411,Local Vegetable Mandi,local-mandi,groceries
+0975270f-fdba-4973-8d41-d72ff7c0ea73,Ratnadeep Supermarket,ratnadeep,groceries
+94fed005-6095-4a5b-b826-289a55000247,Namdhari Fresh,namdhari,groceries
+bf581ab9-5aaf-4649-9ca0-df05bd8a1ca6,Amazon India,amazon,shopping
+a0422724-2767-40ea-97a3-1cfe026efaf4,Flipkart,flipkart,shopping
+a382acd6-daaa-40ed-beec-131cd16794c5,Myntra,myntra,shopping
+f2c6a964-2598-469b-acb3-89313d078a38,Ajio,ajio,shopping
+d7bb195b-72fa-473d-bf47-43cfa7b1761e,Zara,zara,shopping
+a0594b50-a823-4fc4-9c07-24d158753a30,Uniqlo,uniqlo,shopping
+f3901288-33d4-415e-a4e1-a1008bf7486c,H&M,hnm,shopping
+50266ed6-b1ae-4ac4-9ca5-c406b575264a,Westside,westside,shopping
+7390b28c-c985-4a54-a5a6-d0b3d266aabd,Marks & Spencer,marks-spencer,shopping
+06864bd3-469c-4198-87a3-e888e1fbaccd,Decathlon,decathlon,shopping
+ee64edc3-aac3-4b19-a521-33a47e910364,Apple Store,apple,electronics
+ac99d6eb-7d4e-4d64-bb47-2c92b3e10c6e,Croma,croma,electronics
+3ee6cbb2-10be-4ce4-b196-b9ba69bb96d9,Reliance Digital,reliance-digital,electronics
+1f18cc2e-69b2-436e-b4fc-6ff2497fc498,Vijay Sales,vijay-sales,electronics
+23ad027a-e711-45e7-89e4-ed8a0a958ace,IKEA India,ikea,shopping
+ab4e4140-8187-41a5-9e8b-e0a8cbbab6d1,Fabindia,fabindia,shopping
+1bc2ab1e-cdc6-443a-9ba4-18ce7e90b249,Uber,uber,travel--transport
+cd7cf406-8ebb-45d8-9444-f324b34cc8be,Ola Cabs,ola,travel--transport
+614574d6-910d-4a76-ba2c-92ccb8b0a5f7,Rapido Bike Taxi,rapido,travel--transport
+50759257-2084-46dc-abe8-b886a86e22ae,Namma Metro,namma-metro,travel--transport
+25925811-af96-4af1-8b17-58ea4054f917,Delhi Metro DMRC,delhi-metro,travel--transport
+20271de8-39e7-4e60-ad2a-ae299f29301b,MakeMyTrip,makemytrip,travel--vacation
+3d4b295f-02ea-43d0-b718-48ac6b2525ad,IRCTC,irctc,travel--transport
+8d98c27d-5e0b-4480-ab61-d735eb879d8a,IndiGo Airlines,indigo,travel--vacation
+cee881d9-c742-4aee-8dca-38293d67109a,Air India,air-india,travel--vacation
+662f538b-c8d5-46fb-8160-1296ccf03a53,HP Petrol Pump,hp-petrol,travel--transport
+3a3f6753-6c23-42b1-ae3d-f87e5ebeb083,Indian Oil Petrol,ioc-petrol,travel--transport
+8f7871ad-a7c9-4de5-a11b-1f5af4716bd0,Bharat Petroleum,bpcl-petrol,travel--transport
+2904bc72-96f2-43d6-aaac-4e37d4c8c3af,Fastag Toll,fastag,travel--transport
+4e012cc1-68f4-4e6a-a4cd-018f4020448b,Goibibo,goibibo,travel--vacation
+c77ad2f3-0611-43bc-957c-b890ee966cd6,BESCOM Bangalore,bescom,utilities
+1fdf581b-8bdc-4f5c-8818-1377d242511b,Tata Power,tata-power,utilities
+3a91cac9-74a7-4298-9a67-5677b0270dd9,Adani Electricity,adani-power,utilities
+375e573f-8c51-4581-9e23-39a7c9585c9e,Airtel Broadband,airtel,utilities
+2af0f652-4480-45b5-8d26-35d5a26427a2,Jio Fiber,jio,utilities
+264e537f-6133-49f3-a8bc-95073a02f532,Indraprastha Gas,igl,utilities
+b0a86134-b070-4435-8712-a2b941f8aa75,Bharat Gas LPG,bharat-gas,utilities
+07df67a9-a755-4979-ac18-e6c3b68a5f36,House Owner Rent,house-rent,housing--rent
+6b6d8c28-d1f8-40ce-89c3-dc9c4a14b448,NoBroker Maintenance,nobroker,housing--rent
+a16f4766-0a71-4ed0-80ae-5ab1a9e39842,MyGate Maintenance,mygate,housing--rent
+afcf0f68-f7ae-4ffa-a1fd-bcdfe367a0a5,Urban Company,urban-company,personal-care
+2f5a3e48-b5c3-42fd-a8a9-62bf4022d1fd,Naturals Salon,naturals-salon,personal-care
+cd19bb3f-9f1f-448a-b09c-ec9b1d50c743,Enrich Salon,enrich-salon,personal-care
+397883e1-8f49-4f5f-9d84-1e44fcb30821,Delhi Jal Board,djb-water,utilities
+0452ce8a-8a96-432f-bb18-708c6b196725,BWSSB Water Board,bwssb-water,utilities
+276d0555-fb79-49d0-ba2a-054b41203677,ACT Fibernet,act-fibernet,utilities
+b943bc55-f529-4a6d-a132-9dc9b6f74b9a,Netflix,netflix,subscriptions
+5f34fbba-5bef-4a3c-9c75-4b4b519dc49f,Spotify India,spotify,subscriptions
+24a8110e-bbd4-4235-bbaa-c1b2a5dccb3a,Disney+ Hotstar,hotstar,subscriptions
+0a3e1bf3-5edf-409d-9007-8a8d3d761337,YouTube Premium,youtube,subscriptions
+f975281c-5641-40e8-a464-2dcce3ea5f89,Amazon Prime,amazon-prime,subscriptions
+47b1bc9d-ffc6-4622-83f6-ecdb0441299f,Apple Services,apple-services,subscriptions
+97ff20ac-bcca-4676-9be7-b4c3947e222f,BookMyShow,bookmyshow,entertainment
+bbce2958-c66d-4561-b6a3-c37d133915ad,PVR Cinemas,pvr,entertainment
+d6839c51-3ab4-49bf-86d2-75bc59760d33,INOX Leisure,inox,entertainment
+01704991-8069-4998-ac90-e22766d547f1,Sony LIV,sonyliv,subscriptions
+0540a575-198c-41da-bd16-ba55a3cbd7f5,Zee5 Premium,zee5,subscriptions
+87de8389-2673-44e5-a047-517b829d8a40,Audible India,audible,subscriptions
+0bef05a1-6eea-4b46-815c-d6d7eb0d7553,Cult.fit,cultfit,health--fitness
+7f45d5a0-d047-4425-ad13-37e9b7f5fc73,Apollo Pharmacy,apollo-pharmacy,health--fitness
+1c3402ea-108c-4f9f-aef5-87866918a280,1mg Healthcare,tata-1mg,health--fitness
+9c1dd32f-2eef-4fbe-9548-dd2fac8e773f,Pharmeasy,pharmeasy,health--fitness
+ceb76452-28df-411f-b469-7a5dd9cd4e23,Max Healthcare,max-health,health--fitness
+d18a69b6-c6ce-4eee-baca-45b4e786caf8,Fortis Hospital,fortis,health--fitness
+76264cdd-8702-43bd-90f5-8e8b35373507,Manipal Hospital,manipal,health--fitness
+ea37f8d1-95ee-4917-96d7-f7b841a91815,Gold Gym,golds-gym,health--fitness
+ba8a8773-a282-4183-b8bb-a23a4f3f5d73,Coursera,coursera,education
+4b95aa14-9584-4c58-9cc3-1a3f12d3365c,Udemy India,udemy,education
+84b0ccce-d29a-4ff9-813b-05d39b68c2c3,Unacademy,unacademy,education
+b20af42c-dbd9-475c-8e33-bf63cfb47475,Byjus Classes,byjus,education
+a22edae4-3721-47c4-b94f-585a710d1e94,Zerodha Broking,zerodha,investments--savings
+7380e589-9c07-4a05-8670-83d48e9b87e8,Groww Invest,groww,investments--savings
+b48be111-b077-4d30-8747-a6a53ac6da15,HDFC Mutual Fund,hdfc-mf,investments--savings
+2c6f181f-3754-4552-9278-6a37794db9c2,ICICI Prudential,icici-pru,investments--savings
+03c827c2-5807-49b6-8628-754eb4677228,PPF Public Fund,ppf-deposit,investments--savings
+cc3f24a6-0f87-41d0-9713-916bbf7c894f,NPS National Pension,nps-trust,investments--savings
+b1b4fced-d400-4e04-a54b-ddf1e0dbd9c2,GitHub Pro,github,office--business
+f0b06522-3e05-4ab2-af28-4d7eaa3ab8b9,OpenAI ChatGPT,openai,office--business
+4ea7ccd5-588e-44ef-9e12-1d27a325801b,Amazon Web Services,aws,office--business
+7582708f-e8c0-4a0d-bc9b-aae15ef0e774,Vercel Inc,vercel,office--business
+cd12ada5-853e-4be0-b589-fbe50369eb02,JetBrains,jetbrains,office--business
+7d73b455-81bb-4fdf-a461-23ba881a81ee,Figma Inc,figma,office--business
+4cd2d9f9-66d6-4a2f-8b12-2644a2199a61,ClearTax India,cleartax,financial--tax
+961a66de-c7b6-48c7-87bb-778b0fe3ea54,LIC Insurance,lic-india,financial--tax
+be193f3d-210c-447f-ac39-961ffd2a22ce,Infosys Technologies,infosys,income
+eba2cd09-47fe-4ac8-943c-7467fb956973,TCS e-Serve,tcs,income
+5ee7e114-a375-43b2-84af-ca3a0f11a15f,Microsoft India,microsoft,income
+8a269675-2770-4f28-81a6-0b8412b437d5,Razorpay Software,razorpay-employer,income
+9a771093-695b-4457-8143-c5180567b572,Google India,google-employer,income
+0121e712-1c38-42dc-92b8-fad7c3d4865e,Wipro Technologies,wipro,income
+f3893352-a514-4821-9f89-2a3cad171015,Freelance Client US,freelance-client-us,income
+4d54458d-6aa7-4815-9daf-5aff2ed53d45,Consulting Retainer,consulting-client,income

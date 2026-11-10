@@ -1,0 +1,1 @@
+"""Response-generation provider adapters."""

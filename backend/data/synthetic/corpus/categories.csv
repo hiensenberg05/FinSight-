@@ -1,0 +1,21 @@
+name,slug,type,color
+Income,income,income,#10B981
+Food & Dining,food-dining,expense,#F59E0B
+Groceries,groceries,expense,#10B981
+Shopping,shopping,expense,#EC4899
+Travel & Transport,travel-transport,expense,#3B82F6
+Utilities,utilities,expense,#6366F1
+Housing & Rent,housing-rent,expense,#8B5CF6
+Entertainment,entertainment,expense,#D946EF
+Health & Fitness,health-fitness,expense,#EF4444
+Investments & Savings,investments-savings,expense,#14B8A6
+Subscriptions,subscriptions,expense,#A855F7
+Education,education,expense,#06B6D4
+Personal Care,personal-care,expense,#F43F5E
+Office & Business,office-business,expense,#64748B
+Donations & Gifts,donations-gifts,expense,#E11D48
+Financial & Tax,financial-tax,expense,#78716C
+Travel & Vacation,travel-vacation,expense,#0284C7
+Electronics,electronics,expense,#4F46E5
+Internal Transfer,internal-transfer,transfer,#6B7280
+Miscellaneous,miscellaneous,expense,#9CA3AF

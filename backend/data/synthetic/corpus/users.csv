@@ -1,0 +1,21 @@
+id,email,password_hash,display_name,preferred_language,base_currency,persona_type,is_active,is_primary_demo
+2095f3f7-2e31-48df-a8c7-f8f13a07e596,rohan.verma@example.com,pbkdf2_sha256$260000$dummy$hash,Rohan Verma,en,INR,student,True,False
+b6c46540-b2db-471a-aa18-b8d8b2617778,priya.sharma@example.com,pbkdf2_sha256$260000$dummy$hash,Priya Sharma,en,INR,student,True,False
+ed26f9c2-ab2f-423e-bfdf-4c0e96f50a24,ananya.roy@example.com,pbkdf2_sha256$260000$dummy$hash,Ananya Roy,en,INR,student,True,False
+9be18e2e-7244-479e-ab26-9fc00eed0cc1,aditya.patel@example.com,pbkdf2_sha256$260000$dummy$hash,Aditya Patel,en,INR,student,True,False
+685535f1-d215-4d63-b34a-17f5ae5548da,neha.joshi@example.com,pbkdf2_sha256$260000$dummy$hash,Neha Joshi,en,INR,student,True,False
+38e0e979-1497-44b6-982e-4039de32327b,aarav.mehta@example.com,pbkdf2_sha256$260000$dummy$hash,Aarav Mehta,en,INR,young_professional,True,True
+d4a77c8d-e3b5-485b-80c3-1ccba0669ecd,sneha.iyer@example.com,pbkdf2_sha256$260000$dummy$hash,Sneha Iyer,en,INR,young_professional,True,False
+fe09b85d-a4e2-4577-9372-d44a2f9d4e81,vikram.rao@example.com,pbkdf2_sha256$260000$dummy$hash,Vikram Rao,en,INR,young_professional,True,False
+3140fe62-c8da-43a9-90dc-569ae0fd8a28,tanvi.deshmukh@example.com,pbkdf2_sha256$260000$dummy$hash,Tanvi Deshmukh,en,INR,young_professional,True,False
+af9bd24a-bde6-443c-aab0-405aa0cd1066,kavita.nair@example.com,pbkdf2_sha256$260000$dummy$hash,Kavita Nair,en,INR,salaried_professional,True,False
+28e43d1b-8563-4b7e-bf97-15b6f6dc24d2,rajesh.gupta@example.com,pbkdf2_sha256$260000$dummy$hash,Rajesh Gupta,en,INR,salaried_professional,True,False
+ade2ea4c-4d7e-44fa-a7ba-786b4ea8c3cd,meera.sundaram@example.com,pbkdf2_sha256$260000$dummy$hash,Meera Sundaram,en,INR,salaried_professional,True,False
+e6c87707-b5ed-4430-be41-333eb9c10298,amit.saxena@example.com,pbkdf2_sha256$260000$dummy$hash,Amit Saxena,en,INR,salaried_professional,True,False
+50e98749-1f94-439c-9d1e-ea0e9e8b0305,siddharth.malhotra@example.com,pbkdf2_sha256$260000$dummy$hash,Siddharth Malhotra,en,INR,high_spender,True,False
+a0605cba-5a55-4ef2-90bf-bc625cfeb4ab,alok.singhania@example.com,pbkdf2_sha256$260000$dummy$hash,Alok Singhania,en,INR,high_spender,True,False
+556fe105-d7eb-41a5-a370-f74ebf3f44ad,natasha.kapoor@example.com,pbkdf2_sha256$260000$dummy$hash,Natasha Kapoor,en,INR,high_spender,True,False
+ad12ea6a-f61e-4783-b40a-b09699d15606,kabir.sen@example.com,pbkdf2_sha256$260000$dummy$hash,Kabir Sen,en,INR,freelancer,True,False
+0768c34a-76f9-4812-999a-3b825a97a182,ishaan.verma@example.com,pbkdf2_sha256$260000$dummy$hash,Ishaan Verma,en,INR,freelancer,True,False
+dd3fe858-a920-4757-b073-50256c9b05bd,pooja.kulkarni@example.com,pbkdf2_sha256$260000$dummy$hash,Pooja Kulkarni,en,INR,high_saver,True,False
+ef3e3035-416a-4e3f-bdee-0080d6e95220,devendra.parekh@example.com,pbkdf2_sha256$260000$dummy$hash,Devendra Parekh,en,INR,high_saver,True,False

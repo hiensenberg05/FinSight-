@@ -1,0 +1,91 @@
+id,user_id,name,category_name,amount_minor,currency,due_date_str,days_left,auto_pay,status
+cd481e4a-3983-4fed-9f2f-a1f619313c22,2095f3f7-2e31-48df-a8c7-f8f13a07e596,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,3,True,scheduled
+294605a1-20d3-4008-9b9b-e861a0226ad5,2095f3f7-2e31-48df-a8c7-f8f13a07e596,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,7,True,scheduled
+94bc37fa-f02c-45d2-96d3-a9520ac42bac,2095f3f7-2e31-48df-a8c7-f8f13a07e596,Spotify Premium Family,Subscriptions,17900,INR,18th of month,8,True,scheduled
+0ba1aed7-80c2-4eb9-bf30-93cc5274e87f,b6c46540-b2db-471a-aa18-b8d8b2617778,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,3,True,scheduled
+589e52d2-bb2d-47ce-9878-033edd88d723,b6c46540-b2db-471a-aa18-b8d8b2617778,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,17,True,scheduled
+367b5273-0de2-4ee2-b45e-d1598499a23e,b6c46540-b2db-471a-aa18-b8d8b2617778,Spotify Premium Family,Subscriptions,17900,INR,18th of month,7,True,scheduled
+7ec00923-6c0d-4a62-a7fe-358f730ad92a,ed26f9c2-ab2f-423e-bfdf-4c0e96f50a24,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,2,True,scheduled
+383f246f-1711-4a6b-966c-ff16f7334651,ed26f9c2-ab2f-423e-bfdf-4c0e96f50a24,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,20,True,scheduled
+8c228504-515d-4ea4-8135-616881cfb572,ed26f9c2-ab2f-423e-bfdf-4c0e96f50a24,Spotify Premium Family,Subscriptions,17900,INR,18th of month,6,True,scheduled
+e3b0282b-22c2-4fae-89c5-26df44563fc2,9be18e2e-7244-479e-ab26-9fc00eed0cc1,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,28,True,scheduled
+aebbb4cc-0e34-4b8b-be5e-90043f9e5510,9be18e2e-7244-479e-ab26-9fc00eed0cc1,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,15,True,scheduled
+1ca66a5c-8d55-4cfb-9a54-7ab4afc0989e,9be18e2e-7244-479e-ab26-9fc00eed0cc1,Spotify Premium Family,Subscriptions,17900,INR,18th of month,6,True,scheduled
+6e655204-3f46-4e8c-8ca4-76e53f72f049,685535f1-d215-4d63-b34a-17f5ae5548da,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,10,True,scheduled
+83e1c6e6-1acc-4934-a07b-85b49901af36,685535f1-d215-4d63-b34a-17f5ae5548da,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,1,True,scheduled
+78a9becf-3148-4728-8345-44338dee9c0c,685535f1-d215-4d63-b34a-17f5ae5548da,Spotify Premium Family,Subscriptions,17900,INR,18th of month,8,True,scheduled
+f6688dfa-5e2a-4920-b9cc-6277e1b58c98,38e0e979-1497-44b6-982e-4039de32327b,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,7,True,scheduled
+51cb1855-801d-4345-aa37-f59c1540a657,38e0e979-1497-44b6-982e-4039de32327b,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,1,True,scheduled
+925dde34-7d40-4e6d-b705-4f2e5a0c77a4,38e0e979-1497-44b6-982e-4039de32327b,Spotify Premium Family,Subscriptions,17900,INR,18th of month,19,True,scheduled
+92e5854d-f365-4d69-bd59-007829d76664,38e0e979-1497-44b6-982e-4039de32327b,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,12,True,scheduled
+85445015-10ac-4fee-b894-505007ff39b9,38e0e979-1497-44b6-982e-4039de32327b,Bescom Electricity Bill,Utilities,185000,INR,20th of month,1,True,scheduled
+9437ffe8-7767-477b-818a-0f1e44c554eb,d4a77c8d-e3b5-485b-80c3-1ccba0669ecd,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,13,True,scheduled
+432a8acd-e1f1-48ec-a488-677b8516dabf,d4a77c8d-e3b5-485b-80c3-1ccba0669ecd,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,7,True,scheduled
+6bcbcda0-bcb4-4f1b-a6fb-71cc69ca283e,d4a77c8d-e3b5-485b-80c3-1ccba0669ecd,Spotify Premium Family,Subscriptions,17900,INR,18th of month,22,True,scheduled
+237d2e26-9db2-4897-b942-1234cc8f8fbc,d4a77c8d-e3b5-485b-80c3-1ccba0669ecd,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,10,True,scheduled
+f7c57c41-f9f0-47d5-b0b6-c0beeeac1f77,d4a77c8d-e3b5-485b-80c3-1ccba0669ecd,Bescom Electricity Bill,Utilities,185000,INR,20th of month,20,True,scheduled
+1c43ad8d-ab9c-40ce-8abb-e97dc99ad08b,fe09b85d-a4e2-4577-9372-d44a2f9d4e81,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,7,True,scheduled
+bf5ab0d5-cdc7-4f17-a8a5-405bd06a9b5c,fe09b85d-a4e2-4577-9372-d44a2f9d4e81,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,19,True,scheduled
+d42df2b7-1d7f-4a4e-8807-1fc8f41988ff,fe09b85d-a4e2-4577-9372-d44a2f9d4e81,Spotify Premium Family,Subscriptions,17900,INR,18th of month,23,True,scheduled
+e5ab9e12-0f67-4b84-884a-28773a00e50d,fe09b85d-a4e2-4577-9372-d44a2f9d4e81,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,25,True,scheduled
+74d85e32-d3c9-4560-81d2-9e51977a383c,fe09b85d-a4e2-4577-9372-d44a2f9d4e81,Bescom Electricity Bill,Utilities,185000,INR,20th of month,19,True,scheduled
+0cd8e238-2e8b-4376-becf-50ee9054c2f9,3140fe62-c8da-43a9-90dc-569ae0fd8a28,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,20,True,scheduled
+5542d323-bc5e-4d7d-b9c9-09f2b3eecac5,3140fe62-c8da-43a9-90dc-569ae0fd8a28,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,9,True,scheduled
+a0aac0c0-6265-433b-a47b-4b16ba5ccd31,3140fe62-c8da-43a9-90dc-569ae0fd8a28,Spotify Premium Family,Subscriptions,17900,INR,18th of month,12,True,scheduled
+c4887e16-9199-4d8a-9a2d-fdcebd006f9d,3140fe62-c8da-43a9-90dc-569ae0fd8a28,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,9,True,scheduled
+4674cb71-29d5-4842-8147-e040b70a76a8,3140fe62-c8da-43a9-90dc-569ae0fd8a28,Bescom Electricity Bill,Utilities,185000,INR,20th of month,4,True,scheduled
+caab126a-52d1-4629-9402-382f6c3e0d86,af9bd24a-bde6-443c-aab0-405aa0cd1066,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,20,True,scheduled
+01b5b461-1419-48a5-aea8-b7b812d37520,af9bd24a-bde6-443c-aab0-405aa0cd1066,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,11,True,scheduled
+34602e39-c035-42e3-94a3-c5d6a6411112,af9bd24a-bde6-443c-aab0-405aa0cd1066,Spotify Premium Family,Subscriptions,17900,INR,18th of month,12,True,scheduled
+a98ba3aa-8603-4085-ab45-cd3d0d157a63,af9bd24a-bde6-443c-aab0-405aa0cd1066,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,18,True,scheduled
+3b7e3a20-5896-4260-a2d5-69b73bd4268b,af9bd24a-bde6-443c-aab0-405aa0cd1066,Bescom Electricity Bill,Utilities,185000,INR,20th of month,15,True,scheduled
+171b02ae-e1e4-42a3-b9dc-6dd7acbf0869,28e43d1b-8563-4b7e-bf97-15b6f6dc24d2,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,10,True,scheduled
+ad36f49f-87b6-4cf5-8886-d66e6d92d5bd,28e43d1b-8563-4b7e-bf97-15b6f6dc24d2,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,26,True,scheduled
+d9873125-238a-45bd-8dfd-9f13defbef57,28e43d1b-8563-4b7e-bf97-15b6f6dc24d2,Spotify Premium Family,Subscriptions,17900,INR,18th of month,6,True,scheduled
+caf0c91c-262c-400b-9cd5-530b7c5063a2,28e43d1b-8563-4b7e-bf97-15b6f6dc24d2,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,3,True,scheduled
+d7f6ae60-bc7a-4a5b-ba2c-79a38a4fc0a3,28e43d1b-8563-4b7e-bf97-15b6f6dc24d2,Bescom Electricity Bill,Utilities,185000,INR,20th of month,26,True,scheduled
+9cfa94af-6026-4073-bcc8-be5809296b69,ade2ea4c-4d7e-44fa-a7ba-786b4ea8c3cd,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,16,True,scheduled
+00b46698-b359-4362-bcad-3a13970cd350,ade2ea4c-4d7e-44fa-a7ba-786b4ea8c3cd,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,13,True,scheduled
+069565dc-b318-43d8-b60a-7bda5cbff857,ade2ea4c-4d7e-44fa-a7ba-786b4ea8c3cd,Spotify Premium Family,Subscriptions,17900,INR,18th of month,22,True,scheduled
+f1b9bafd-be95-43c3-9c50-e5da67b23914,ade2ea4c-4d7e-44fa-a7ba-786b4ea8c3cd,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,21,True,scheduled
+a70f4901-a06d-4036-ac75-ef45ccc1c663,ade2ea4c-4d7e-44fa-a7ba-786b4ea8c3cd,Bescom Electricity Bill,Utilities,185000,INR,20th of month,22,True,scheduled
+8e80b78d-fcab-4b9f-8477-51a608a3b04f,e6c87707-b5ed-4430-be41-333eb9c10298,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,8,True,scheduled
+7d7506ba-ec52-4bf6-9c89-f23de170ee60,e6c87707-b5ed-4430-be41-333eb9c10298,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,26,True,scheduled
+41b8f76d-660d-4592-abe1-5b2a119d315e,e6c87707-b5ed-4430-be41-333eb9c10298,Spotify Premium Family,Subscriptions,17900,INR,18th of month,25,True,scheduled
+0f281d18-bc05-4e88-a5d0-0a1b0e14bca2,e6c87707-b5ed-4430-be41-333eb9c10298,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,17,True,scheduled
+eddacd6a-17e2-4452-b013-42a939881e5f,e6c87707-b5ed-4430-be41-333eb9c10298,Bescom Electricity Bill,Utilities,185000,INR,20th of month,25,True,scheduled
+7a622005-d765-4bb2-bb79-83610dc1d88e,50e98749-1f94-439c-9d1e-ea0e9e8b0305,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,4,True,scheduled
+0896e475-fea1-47a5-879a-8c2952d74f3e,50e98749-1f94-439c-9d1e-ea0e9e8b0305,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,25,True,scheduled
+e7838c5b-5bfc-4c8b-8618-ed663d82e41c,50e98749-1f94-439c-9d1e-ea0e9e8b0305,Spotify Premium Family,Subscriptions,17900,INR,18th of month,11,True,scheduled
+3d3dff29-5f6d-413d-9d2c-d2b97d033b2f,50e98749-1f94-439c-9d1e-ea0e9e8b0305,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,9,True,scheduled
+b4d00354-a729-4b56-989f-e8e7690d35a9,50e98749-1f94-439c-9d1e-ea0e9e8b0305,Bescom Electricity Bill,Utilities,185000,INR,20th of month,18,True,scheduled
+a2facd11-6f30-4060-9092-33fd8f32531c,a0605cba-5a55-4ef2-90bf-bc625cfeb4ab,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,11,True,scheduled
+6e4e3cfb-3c54-435c-9dd1-beccb5ccd304,a0605cba-5a55-4ef2-90bf-bc625cfeb4ab,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,1,True,scheduled
+2502a4b0-b02e-4c8c-bd01-30c4007c6fe7,a0605cba-5a55-4ef2-90bf-bc625cfeb4ab,Spotify Premium Family,Subscriptions,17900,INR,18th of month,15,True,scheduled
+ba5f0a03-a435-4266-8a95-f96d2c5cc2d4,a0605cba-5a55-4ef2-90bf-bc625cfeb4ab,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,18,True,scheduled
+378199c3-b7de-4bae-acb7-e2ea48d9a567,a0605cba-5a55-4ef2-90bf-bc625cfeb4ab,Bescom Electricity Bill,Utilities,185000,INR,20th of month,25,True,scheduled
+1a656eb1-79cf-460b-8ad0-4f5c3535c8b2,556fe105-d7eb-41a5-a370-f74ebf3f44ad,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,4,True,scheduled
+c236f53c-ae89-48ce-9b80-e4bad45a36e2,556fe105-d7eb-41a5-a370-f74ebf3f44ad,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,1,True,scheduled
+f7f4350e-50d6-4313-aca5-0b6cfb5b037b,556fe105-d7eb-41a5-a370-f74ebf3f44ad,Spotify Premium Family,Subscriptions,17900,INR,18th of month,10,True,scheduled
+38b38daa-13d6-4a15-9f6d-5009a2697661,556fe105-d7eb-41a5-a370-f74ebf3f44ad,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,22,True,scheduled
+2454ec68-ec42-4666-ae6f-581d15081b04,556fe105-d7eb-41a5-a370-f74ebf3f44ad,Bescom Electricity Bill,Utilities,185000,INR,20th of month,27,True,scheduled
+2f63a79c-3c46-4f87-afbc-3a4e7739bdce,ad12ea6a-f61e-4783-b40a-b09699d15606,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,14,True,scheduled
+42367515-7fdc-4256-bbb8-187b01cf8878,ad12ea6a-f61e-4783-b40a-b09699d15606,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,27,True,scheduled
+c35fd419-726b-43b9-a7bb-f9aedee3db90,ad12ea6a-f61e-4783-b40a-b09699d15606,Spotify Premium Family,Subscriptions,17900,INR,18th of month,20,True,scheduled
+cd2e0ef6-e43c-4464-9796-27b77ee0a4a9,ad12ea6a-f61e-4783-b40a-b09699d15606,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,8,True,scheduled
+27208295-769d-4946-99aa-4b65af3de2fb,ad12ea6a-f61e-4783-b40a-b09699d15606,Bescom Electricity Bill,Utilities,185000,INR,20th of month,4,True,scheduled
+df19bac5-c7a7-44d5-99ee-df86b28d7a3f,0768c34a-76f9-4812-999a-3b825a97a182,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,28,True,scheduled
+e8ec8b78-3b98-431f-973d-53c27a08321b,0768c34a-76f9-4812-999a-3b825a97a182,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,13,True,scheduled
+54a4b131-942e-4e2f-88aa-072fa88011b5,0768c34a-76f9-4812-999a-3b825a97a182,Spotify Premium Family,Subscriptions,17900,INR,18th of month,23,True,scheduled
+09019284-b28b-4fc1-8726-2c9db8c10bb7,0768c34a-76f9-4812-999a-3b825a97a182,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,3,True,scheduled
+74bfdfe9-3fcc-42c1-bdc9-3f425f854291,0768c34a-76f9-4812-999a-3b825a97a182,Bescom Electricity Bill,Utilities,185000,INR,20th of month,16,True,scheduled
+fbd3dc22-9898-4060-860c-840768a0880b,dd3fe858-a920-4757-b073-50256c9b05bd,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,17,True,scheduled
+4805e48d-c7af-43a7-ac92-aa280048cf87,dd3fe858-a920-4757-b073-50256c9b05bd,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,1,True,scheduled
+efcc026f-e2ef-4229-aa75-74367b2d2993,dd3fe858-a920-4757-b073-50256c9b05bd,Spotify Premium Family,Subscriptions,17900,INR,18th of month,21,True,scheduled
+0869b713-4fea-42da-835f-b0f1d5e9527a,dd3fe858-a920-4757-b073-50256c9b05bd,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,25,True,scheduled
+1a7ca07a-baed-4c33-8079-a45a79e6286e,dd3fe858-a920-4757-b073-50256c9b05bd,Bescom Electricity Bill,Utilities,185000,INR,20th of month,18,True,scheduled
+df5be507-f872-47af-843f-717709ea091d,ef3e3035-416a-4e3f-bdee-0080d6e95220,Airtel Broadband Fiber,Utilities,117900,INR,5th of month,25,True,scheduled
+202ed82d-dadd-48be-8c6a-bf6bd7460a24,ef3e3035-416a-4e3f-bdee-0080d6e95220,Netflix Standard Subscription,Subscriptions,64900,INR,12th of month,23,True,scheduled
+37152c1d-2068-44dc-962c-2123864c0f8f,ef3e3035-416a-4e3f-bdee-0080d6e95220,Spotify Premium Family,Subscriptions,17900,INR,18th of month,19,True,scheduled
+87465a0b-8fbf-44d3-8504-6b1311d75388,ef3e3035-416a-4e3f-bdee-0080d6e95220,Cultfit Gym Membership,Health & Fitness,250000,INR,1st of month,9,True,scheduled
+411aa9b1-bd15-4b43-bcf4-62505b19baf4,ef3e3035-416a-4e3f-bdee-0080d6e95220,Bescom Electricity Bill,Utilities,185000,INR,20th of month,7,True,scheduled

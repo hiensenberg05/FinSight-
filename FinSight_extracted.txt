@@ -1,0 +1,273 @@
+FinSight
+Voice-first Personal Financial Intelligence Platform
+Understand your money. Talk to your finances. Make smarter decisions.
+Product Requirements Document · Version 1.0 · October 2026
+1. Product overview
+FinSight is a voice-first personal financial intelligence platform that transforms fragmented financial transaction records into actionable insights through multilingual voice conversations, conversational analytics, anomaly detection and predictive financial intelligence.
+Users can upload their bank statements in CSV format, analyse their UPI and other transactions, understand spending patterns, forecast cash flows and ask questions about their finances through natural conversations.
+Gnani AI provides the core speech capabilities, while FinSight's own analytics and AI layers generate financial intelligence.
+Product vision: Make personal financial management conversational, intelligent, predictive and accessible.
+2. Problem statement
+People increasingly use UPI, debit cards, bank transfers and other digital payment methods. However, their financial information is often fragmented and difficult to interpret.
+The major problems are:
+Financial transactions are scattered across multiple accounts and payment platforms.
+Users lack visibility into where their money is actually going.
+Conventional expense trackers display spending but rarely explain why it changes.
+Users identify overspending only after their money has been spent.
+Most applications provide limited predictive cash-flow intelligence.
+Financial dashboards can be difficult to navigate and understand.
+Existing financial tools provide limited natural-language and multilingual interaction.
+Our solution: A unified conversational financial analyst that helps users understand historical transactions, investigate financial behaviour and anticipate future financial conditions.
+3. Target customer segments
+Segment
+Primary needs
+FinSight value
+College students
+Allowance and spending management
+Budgeting and UPI spending intelligence
+Young professionals
+Salary and expense management
+Savings and spending analysis
+Salaried employees
+EMIs, bills and subscriptions
+Cash-flow forecasting
+Freelancers
+Irregular income management
+Income and expenditure forecasting
+Families
+Household spending visibility
+Financial summaries and shared planning
+Initial target market
+College students, young professionals and salaried individuals.
+The initial product will support individual financial profiles, not multi-user business accounting.
+4. Eight core product features
+Moneytor - Personal Finance App for Australians
+01. Unified Financial Data Hub
+CSV bank statement uploads.
+Transaction cleaning and normalization.
+Income and expense classification.
+UPI transaction extraction.
+Merchant identification and transaction history.
+Value: Creates a consolidated financial profile.
+AI Finance Mobile iOS App Design by Purrweb UI/UX Agency on Dribbble
+02. Multilingual Voice Financial Assistant
+Gnani-powered speech recognition and speech generation.
+English, Hindi and Hinglish interaction, subject to API support.
+Context-aware follow-up questions.
+Spoken financial explanations.
+Text-based fallback.
+Value: Makes financial information accessible through natural conversation.
+Turn your Payment Data into Actionable Insights | Tapix by Dateio
+03. Conversational Financial Analytics
+Monthly and quarterly comparisons.
+Category-wise spending.
+UPI merchant analytics.
+Income versus expenditure.
+Savings ratios and spending trends.
+Value: Explains financial behaviour rather than merely displaying transactions.
+Detecting hidden anomalies in high-dimensional billing data
+04. Spending Anomaly Detection
+Unusual transaction amounts.
+Sudden spending spikes.
+Duplicate transaction indicators.
+Unexpected recurring charges.
+Unusual merchant frequency.
+Value: Helps users identify potentially irregular financial activity.
+AI Cash Flow Forecasting in QuickBooks: 90% Time Savings [Case Study] - Ledger Summit
+05. Predictive Cash-Flow Intelligence
+Monthly expense forecasting.
+Projected cash balances.
+Savings predictions.
+Upcoming recurring payments.
+Budget-overrun warnings.
+Value: Helps users anticipate future financial conditions.
+Ai Fintech service - Mobile app by Sahil Dobariya for Heloxone® Design Studio on Dribbble
+06. Smart Budgeting and Goal Planning
+Monthly budgets.
+Category-level budget limits.
+Savings goals.
+Budget utilization.
+What-if financial simulations.
+Value: Converts financial insights into actionable plans.
+Albert | Your personal financial assistant
+07. Proactive Financial Intelligence
+Spending alerts.
+Upcoming bill reminders.
+Declining savings-rate notifications.
+Budget threshold alerts.
+Weekly financial summaries.
+Value: Makes financial management proactive.
+Akili Edge — Financial Planning, Forecasting & AI Copilot
+08. Financial Reports and Dashboard
+Financial health overview.
+Income and expenditure reports.
+Spending visualizations.
+Historical comparisons.
+Downloadable financial summaries.
+Value: Provides a consolidated view of financial performance.
+5. Key user journeys and use cases
+These are the primary scenarios we should demonstrate.
+User query / action
+FinSight response
+"Why did I spend ₹8,000 more this month?"
+Identifies category-wise spending increases and explains the variance.
+"How much did I spend through UPI?"
+Calculates total UPI spending and merchant distribution.
+"Which merchant receives most of my money?"
+Ranks merchants by transaction value and frequency.
+"How much will I save next month?"
+Forecasts savings based on historical income and spending assumptions.
+"Find unusual transactions."
+Highlights transactions that deviate from established spending patterns.
+"Can I save ₹50,000 in six months?"
+Simulates a savings plan using available financial data.
+"What are my upcoming recurring payments?"
+Identifies recurring transactions and estimates their next occurrence.
+"Generate my monthly financial report."
+Produces a visual report and a concise conversational summary.
+Flagship demonstration scenario
+A user uploads three months of bank statements and asks:
+"Why did my expenses increase this month?"
+FinSight:
+Retrieves and analyses the relevant transactions.
+Compares current and previous monthly spending.
+Identifies categories responsible for the increase.
+Detects unusual transactions where appropriate.
+Generates a visual breakdown.
+Explains the findings using Gnani's speech generation.
+This will be our primary hackathon demo.
+6. Slack integration — MVP
+Slack will be included in the hackathon release as a secondary interface for personal financial summaries and notifications.
+It will not change our primary personal-finance target market.
+Proposed capabilities:
+Feature
+Description
+Financial summaries
+Send scheduled weekly/monthly summaries
+Conversational queries
+Ask FinSight questions through a Slack bot
+Budget notifications
+Receive alerts when spending crosses limits
+Anomaly alerts
+Notify users about unusual transactions
+Report sharing
+Share authorized financial summaries
+Example:
+Slack Announces Record Third Quarter Fiscal Year 2020 Results | Slack
+#my-finances
+FinSight Bot
+Your weekly financial summary:
+Total expenditure: ₹9,450
+Food and dining: ₹3,200
+Shopping: ₹2,500
+Transport: ₹1,250
+Your shopping expenditure increased by 22% compared with the previous week.
+Illustrative example using synthetic data.
+Slack will use the same backend analytics engine as the voice assistant and dashboard. Financial data will only be shared with the user's authorized Slack workspace and channels.
+7. MVP scope and boundaries
+We should be strict about what makes it into the hackathon release.
+Included in V1
+MVP
+CSV transaction ingestion.
+UPI transaction extraction from statements.
+Transaction categorization.
+Financial analytics dashboard.
+Gnani-powered voice assistant.
+Conversational financial queries.
+Basic anomaly detection.
+Cash-flow forecasting.
+Basic budgeting and savings goals.
+Slack bot with summaries and queries.
+Monthly financial reporting.
+Explicitly excluded from V1
+Direct UPI payment execution.
+Direct Google Pay or PhonePe transaction-history access.
+Live Account Aggregator integration.
+Investment buy/sell recommendations.
+Automated lending or credit decisions.
+Full business accounting.
+Autonomous movement of money.
+Synthetic demo profiles will also be provided so judges can explore the product without uploading personal financial information.
+8. Integrations and technology connections
+Integration
+Purpose
+Release
+Gnani Prisma
+Speech-to-text
+V1
+Gnani Timbre
+Text-to-speech
+V1
+LLM API
+Intent understanding and explanation
+V1
+CSV / Excel parser
+Financial data ingestion
+V1
+PostgreSQL
+Financial database
+V1
+Slack API
+Bot and notifications
+V1
+Python / Pandas
+Financial calculations
+V1
+Scikit-learn
+Anomaly detection
+V1
+Forecasting libraries
+Cash-flow predictions
+V1
+Account Aggregator
+Bank connectivity
+Future
+Razorpay
+Business payment data
+Future
+Google Sheets
+Data import/export
+Future
+WhatsApp Business API
+Conversational financial access
+Future
+Proposed technical stack
+Frontend: React, Vite, Tailwind CSS.
+Backend: Python FastAPI.
+Database: PostgreSQL.
+Voice: Gnani APIs, WebSockets where supported.
+Analytics: Pandas, NumPy, SQL.
+Machine learning: Scikit-learn, Statsmodels, optional LightGBM.
+AI orchestration: LLM with controlled tool calling.
+Notifications: Slack API.
+Infrastructure: Docker and AWS or another suitable deployment platform.
+9. Future roadmap
+Hackathon release — Personal financial intelligence
+CSV ingestion, voice assistant, conversational analytics, UPI insights, anomaly detection, forecasting, dashboard and Slack.
+Automated financial connectivity
+Account Aggregator integration through an appropriate authorized partner, improved transaction synchronization, WhatsApp support and automated financial summaries.
+Advanced financial intelligence
+Investment portfolio analytics, improved predictive models, goal-based simulations and specialized financial agents.
+Expansion into business finance
+Freelancer financial intelligence, SME dashboards, vendor payment analytics, accounting integrations and enterprise financial reporting.
+10. Success metrics and evaluation
+We need to measure actual product performance, not just the number of AI features.
+Metric
+Proposed target
+Transaction categorization accuracy
+≥90% on labelled test data
+Financial calculation correctness
+≥99% on deterministic test cases
+Voice query task success
+≥90% on supported test queries
+Analytical answer grounding
+≥95% on a curated evaluation set
+Anomaly detection precision
+≥75% on labelled synthetic anomalies
+CSV ingestion success
+≥95% on supported statement formats
+Forecasting performance
+Beat a seasonal-naive baseline on test data
+End-to-end query latency
+Target under 8 seconds for non-streaming analytical responses
+These are proposed engineering acceptance targets, not existing performance claims. Forecasting and anomaly metrics must be evaluated on held-out data, and voice latency should be measured separately from the complete analytical workflow.

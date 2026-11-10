@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas-base: #070512;
+    --canvas-sidebar: #0A0917;
+    --canvas-surface: #0D0B16;
+    --canvas-bubble: #17152A;
+    --canvas-raised: #14112E;
+    --brand-violet: #6D4FFF;
+    --brand-purple-light: #A78BFA;
+    --brand-pink: #FF4984;
+    --brand-cyan: #2ECB9E;
+    --text-primary: #FFFFFF;
+    --text-secondary: #C8C5DC;
+    --text-muted: #7C7896;
+    --border-card: rgba(255, 255, 255, 0.08);
+    --border-active: rgba(109, 79, 255, 0.4);
+    --radius-card: 16px;
+  }
+
+  body {
+    background-color: var(--canvas-base);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Accessible focus indicators for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid var(--brand-violet);
+    outline-offset: 2px;
+  }
+}
+
+/* Enforce tabular-nums across all currency and numbers - NO monospace font */
+.tabular-nums, .tabular-numbers {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Three-layer chromatic sound orb morphing & rotation keyframes */
+@keyframes orbRotateSlow {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes orbRotateReverse {
+  0% { transform: rotate(360deg) scale(1.03); }
+  50% { transform: rotate(180deg) scale(0.97); }
+  100% { transform: rotate(0deg) scale(1.03); }
+}
+
+@keyframes blobMorph1 {
+  0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+  33% { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+  66% { border-radius: 50% 50% 30% 70% / 55% 40% 60% 45%; }
+}
+
+@keyframes blobMorph2 {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  33% { border-radius: 30% 70% 70% 30% / 50% 60% 40% 50%; }
+  66% { border-radius: 55% 45% 60% 40% / 40% 60% 35% 65%; }
+}
+
+@keyframes blobMorph3 {
+  0%, 100% { border-radius: 50% 50% 40% 60% / 40% 50% 50% 60%; }
+  33% { border-radius: 65% 35% 55% 45% / 55% 45% 65% 35%; }
+  66% { border-radius: 35% 65% 45% 55% / 45% 55% 35% 65%; }
+}
+
+.animate-orb-slow {
+  animation: orbRotateSlow 16s ease-in-out infinite;
+}
+
+.animate-orb-reverse {
+  animation: orbRotateReverse 14s ease-in-out infinite;
+}
+
+.animate-blob-1 {
+  animation: blobMorph1 9s ease-in-out infinite alternate;
+}
+
+.animate-blob-2 {
+  animation: blobMorph2 11s ease-in-out infinite alternate;
+}
+
+.animate-blob-3 {
+  animation: blobMorph3 13s ease-in-out infinite alternate;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070512;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================================================
+   Apple Glossy 3D Glass & Metallic Typography Design Tokens
+   ========================================================================= */
+
+/* 1. Metallic Typography (Spec-grade brushed metals) */
+.text-metallic-silver {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.65));
+}
+
+.text-metallic-platinum {
+  background: linear-gradient(180deg, #FFFFFF 15%, #E2E8F0 50%, #94A3B8 85%, #64748B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.7));
+}
+
+.text-metallic-gold {
+  background: linear-gradient(180deg, #FFFDF0 0%, #FDE68A 45%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
+}
+
+.text-metallic-violet {
+  background: linear-gradient(180deg, #FFFFFF 0%, #C4B5FD 45%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
+}
+
+/* 2. Apple Glossy 3D Glass Surface System */
+.glass-card-3d {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(20, 16, 42, 0.72) 35%, rgba(11, 9, 24, 0.9) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.5), 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-card-3d-interactive {
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-3d-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6), 0 14px 40px 0 rgba(0, 0, 0, 0.6), 0 0 20px 0 rgba(109, 79, 255, 0.15);
+  border-top-color: rgba(255, 255, 255, 0.28);
+}
+
+.glass-inset-tray {
+  background: rgba(9, 7, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.65), inset 0 0 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+.glass-pill-active {
+  background: linear-gradient(180deg, rgba(109, 79, 255, 0.9) 0%, rgba(67, 40, 180, 0.95) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  border-left: 1px solid rgba(139, 92, 246, 0.4);
+  border-right: 1px solid rgba(139, 92, 246, 0.4);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 4px 14px 0 rgba(109, 79, 255, 0.45);
+}

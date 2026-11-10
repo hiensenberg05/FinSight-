@@ -1,0 +1,39 @@
+{
+  "generator_version": "2.1.0",
+  "random_seed": 42,
+  "generated_at": "2026-11-06T18:48:37.581071+00:00",
+  "date_range": {
+    "start": "2024-02-01",
+    "end": "2025-02-28",
+    "total_days": 393
+  },
+  "entity_counts": {
+    "users": 20,
+    "personas": 20,
+    "bank_accounts": 32,
+    "categories": 20,
+    "merchants": 124,
+    "merchant_aliases": 304,
+    "transactions": 17036,
+    "transaction_links": 97,
+    "budgets": 120,
+    "savings_goals": 31,
+    "recurring_payments": 90,
+    "ground_truth_anomalies": 200,
+    "voice_eval_cases": 120
+  },
+  "file_checksums_sha256": {
+    "anomaly_ground_truth.csv": "61804c4c7042169641d556a0f42fd19314edda8b926b9e2f91ded887bb2afe2d",
+    "bank_accounts.csv": "b56382ac95353d857d318097f32d191b4414436ca30c3039a91c379e6808ddd7",
+    "budgets.csv": "048fb3d2264019678d068b14fe0ccec3fcce3e590b6026cf0b9d3638a4b3b998",
+    "categories.csv": "1649feedd337eb856352d18e8750a37c763c988b879e5d5a5084d2b86caef7e3",
+    "merchants.csv": "85d8bb1b67775414876cb4651d490ae50510a994bb7864b69eabfd37c74d0cfc",
+    "merchant_aliases.csv": "7599f47c919cbc8c81f01641c40806a12e15e84cfd039ed973c462752e31c30d",
+    "recurring_payments.csv": "58e3968100837c5de83c9cca4e5d4b2d4871c4b50a4dd9bfdc99f291b850ef0d",
+    "savings_goals.csv": "f38ab2d2aa39007f53b60e1545101c2969d88230f2b8ab15e65b1859770fb34e",
+    "transactions.csv": "3f9dd7cf41d6ede1d7049f2730b502551e8b2a42efde214a763cb542fb2f407f",
+    "transaction_links.csv": "52618cf39fd5aa3135bb4a6e5a3d520c7ed887819bf11e7540b2ada4aa698c76",
+    "users.csv": "33fc0d6c176f00236961bd1eea9be5dac6a9fa791f8377f193036f6740330042",
+    "voice_eval.jsonl": "d9a319dd6818b15aa08d86b66ce77f08c6a01c82113e17b119bb45d38c5e4955"
+  }
+}
