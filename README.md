@@ -174,6 +174,16 @@ cd ..
 ```
 
 ### 5. Run the Application
+
+#### Option A: One-Command Docker Compose (Recommended)
+```bash
+docker compose up -d --build
+```
+* **Frontend UI**: [http://localhost:80](http://localhost:80) or [http://localhost:5173](http://localhost:5173)
+* **Backend API & Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+* **Health Check**: [http://localhost:8000/health](http://localhost:8000/health)
+
+#### Option B: Local Development
 In separate terminal windows:
 
 ```bash
@@ -187,6 +197,15 @@ npm --prefix frontend run dev
 * **Frontend UI**: Open [http://localhost:5173](http://localhost:5173)
 * **Backend API Docs**: Open [http://localhost:8000/docs](http://localhost:8000/docs)
 * **Mock Portal Sandbox**: Open [http://localhost:8000/mock-portal/swiggy/order-89218](http://localhost:8000/mock-portal/swiggy/order-89218)
+
+---
+
+## 🚀 Cloud Deployment (Render & Cloud VM)
+
+FinSight is 100% production-ready for **Render** deployment with automated WebSocket support, managed PostgreSQL, and Playwright headless Chromium.
+
+* **One-Click Blueprint**: FinSight includes [`render.yaml`](render.yaml) for instant 1-click deployment on Render.
+* **Full Deployment Guide**: Detailed step-by-step instructions (PostgreSQL, Docker Web Service, Vite Static Site, Environment Variables, and Post-Deployment Checklist) are documented in [**`DEPLOYMENT.md`**](DEPLOYMENT.md).
 
 ---
 

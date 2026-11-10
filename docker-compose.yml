@@ -1,6 +1,9 @@
 version: '3.8'
 
 services:
+  # ========================================================
+  # Relational Database: PostgreSQL 16
+  # ========================================================
   postgres:
     image: postgres:16-alpine
     container_name: finsight-postgres
@@ -19,7 +22,70 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - finsight-network
+
+  # ========================================================
+  # FinSight AI Core & Voice Gateway (FastAPI + Playwright)
+  # ========================================================
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: finsight-backend
+    restart: unless-stopped
+    environment:
+      PORT: 8000
+      APP_ENV: production
+      DEBUG: "false"
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-finsight}
+      GNANI_API_KEY: ${GNANI_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:-}
+      SLACK_USER_TOKEN: ${SLACK_USER_TOKEN:-}
+      SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID:-C09M5ETUMPF}
+      SLACK_CHANNEL_NAME: ${SLACK_CHANNEL_NAME:-#engineering-inventory-tracker}
+      SECRET_KEY: ${SECRET_KEY:-finsight_production_super_secret_jwt_key_change_me}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - finsight-network
+
+  # ========================================================
+  # FinSight Responsive Dashboard (Vite React + Nginx SPA)
+  # ========================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: "/api/v1"
+        VITE_WS_URL: ""
+    container_name: finsight-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - finsight-network
 
 volumes:
   finsight_pgdata:
     driver: local
+
+networks:
+  finsight-network:
+    driver: bridge
