@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     GENERATION_MODEL: str = "openai/gpt-oss-120b"
     OPENAI_API_KEY: str = ""
     GEMINI_API_KEY: str = ""
-    GROQ_API_KEY: str = ""
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY") or os.getenv("GROQ_APT_KEY") or ""
 
     # Security
     SECRET_KEY: str = "finsight_dev_secret_key_change_in_production"
