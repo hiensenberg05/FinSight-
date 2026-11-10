@@ -98,51 +98,89 @@ export const GlobalVoiceDock: React.FC = () => {
 
     return (
       <section
-        role="dialog"
-        aria-modal="false"
-        aria-labelledby="live-voice-title"
-        className="fixed bottom-4 left-1/2 z-[70] w-[min(420px,calc(100vw-24px))] -translate-x-1/2 rounded-[26px] border border-violet-300/20 bg-[#0B0918]/95 p-4 text-white shadow-[0_18px_70px_rgba(0,0,0,0.72)] backdrop-blur-2xl sm:bottom-6 sm:p-5"
+        role="region"
+        aria-label="FinSight live voice session"
+        className="fixed bottom-4 left-1/2 z-40 w-[min(720px,calc(100vw-24px))] -translate-x-1/2 rounded-2xl border border-slate-700/80 bg-[#0E1322]/95 px-3.5 py-2 text-white shadow-[0_16px_50px_rgba(0,0,0,0.65)] backdrop-blur-xl flex items-center justify-between gap-3 transition-all"
       >
-        <div className="flex items-center justify-between gap-3">
-          <div className="min-w-0">
-            <h2 id="live-voice-title" className="text-sm font-semibold tracking-tight">FinSight live voice</h2>
-            <p className="mt-1 flex items-center gap-2 text-[11px] text-[#B9B4CC]" aria-live="polite">
-              <span className={`h-2 w-2 rounded-full ${voiceState === 'error' ? 'bg-amber-400' : voiceState === 'listening' ? 'bg-cyan-300 animate-pulse' : 'bg-emerald-400'}`} />
-              {voiceState === 'error' ? (voiceError || statusLabel) : statusLabel}
+        {/* Left: Live Visualizer & Status */}
+        <div className="flex items-center gap-3 min-w-0">
+          <div 
+            className="relative flex-shrink-0 flex items-center justify-center cursor-pointer p-0.5" 
+            onClick={toggleListening} 
+            title={isMicMuted ? 'Mic is muted' : 'Tap to pause/resume'}
+          >
+            <SoundOrbMini voiceState={voiceState} audioLevel={audioLevel} />
+          </div>
+          <div className="min-w-0 flex flex-col justify-center">
+            <div className="flex items-center gap-2">
+              <span className={`inline-block h-2 w-2 rounded-full ${voiceState === 'error' ? 'bg-amber-400' : voiceState === 'listening' ? 'bg-cyan-400 animate-pulse' : voiceState === 'speaking' ? 'bg-indigo-400' : 'bg-emerald-400'}`} />
+              <span className="text-[12px] font-semibold text-slate-100 tracking-tight leading-none truncate">
+                {voiceState === 'error' ? (voiceError || statusLabel) : statusLabel}
+              </span>
+              <span className="hidden sm:inline-block text-[10.5px] text-slate-400 font-mono">
+                {isWsConnected ? '· 14ms gateway' : '· connecting'}
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-300 truncate max-w-[190px] sm:max-w-[320px] mt-0.5 leading-tight" aria-live="polite">
+              {liveText}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="hidden text-[10px] text-[#858098] sm:inline">{isWsConnected ? 'Gateway connected' : 'Connecting gateway'}</span>
-            <button type="button" onClick={toggleContinuousMode} aria-label="End live voice session" title="End live voice session" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[#B9B4CC] transition hover:border-white/25 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400">
-              <X className="h-4 w-4" />
-            </button>
-          </div>
         </div>
 
-        <div className="my-1 flex justify-center" aria-label={statusLabel}>
-          <SoundOrbVisualizer voiceState={voiceState} audioLevel={audioLevel} onToggle={toggleListening} idleLabel={isMicMuted ? 'Mic is muted' : 'Tap to resume'} className="!h-[230px] !w-[230px] sm:!h-[250px] sm:!w-[250px]" />
-        </div>
-
-        <p className="min-h-10 rounded-xl border border-white/[0.07] bg-white/[0.035] px-3 py-2 text-center text-xs leading-relaxed text-[#E3E0EC]" aria-live="polite">
-          {liveText}
-        </p>
-
-        <div className="mt-3 flex items-center justify-center gap-2">
-          <button type="button" onClick={toggleMicMute} aria-pressed={isMicMuted} className={`flex min-h-10 items-center gap-2 rounded-full border px-3 text-xs transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 ${isMicMuted ? 'border-rose-400/40 bg-rose-400/10 text-rose-200' : 'border-white/10 bg-white/[0.04] text-[#D5D1E2] hover:bg-white/[0.08]'}`}>
-            {isMicMuted ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-            {isMicMuted ? 'Unmute mic' : 'Mute mic'}
+        {/* Right: Tactile Audio Controls */}
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          <button
+            type="button"
+            onClick={toggleMicMute}
+            aria-pressed={isMicMuted}
+            title={isMicMuted ? 'Unmute microphone' : 'Mute microphone'}
+            className={`flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-[11px] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
+              isMicMuted 
+                ? 'border-rose-500/40 bg-rose-500/15 text-rose-300' 
+                : 'border-slate-700/80 bg-slate-800/60 text-slate-300 hover:bg-slate-700/60 hover:text-white'
+            }`}
+          >
+            {isMicMuted ? <MicOff className="h-3.5 w-3.5" /> : <Mic className="h-3.5 w-3.5" />}
+            <span className="hidden md:inline">{isMicMuted ? 'Unmute' : 'Mute'}</span>
           </button>
-          <button type="button" onClick={toggleMute} aria-pressed={isMuted} className="flex min-h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 text-xs text-[#D5D1E2] transition hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400">
-            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-            {isMuted ? 'Unmute audio' : 'Mute audio'}
+
+          <button
+            type="button"
+            onClick={toggleMute}
+            aria-pressed={isMuted}
+            title={isMuted ? 'Unmute assistant speaker' : 'Mute assistant speaker'}
+            className={`flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-[11px] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
+              isMuted 
+                ? 'border-amber-500/40 bg-amber-500/15 text-amber-300' 
+                : 'border-slate-700/80 bg-slate-800/60 text-slate-300 hover:bg-slate-700/60 hover:text-white'
+            }`}
+          >
+            {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+            <span className="hidden md:inline">{isMuted ? 'Speaker Off' : 'Speaker'}</span>
           </button>
+
           {voiceState === 'speaking' && (
-            <button type="button" onClick={interruptSpeaking} className="flex min-h-10 items-center gap-2 rounded-full border border-rose-400/30 bg-rose-400/10 px-3 text-xs text-rose-200 transition hover:bg-rose-400/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-300">
-              <Square className="h-3.5 w-3.5 fill-current" /> Stop
+            <button
+              type="button"
+              onClick={interruptSpeaking}
+              title="Interrupt and stop speaking"
+              className="flex h-8 items-center gap-1.5 rounded-lg border border-rose-500/40 bg-rose-500/20 px-2.5 text-[11px] font-semibold text-rose-300 transition hover:bg-rose-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400"
+            >
+              <Square className="h-3 w-3 fill-current" />
+              <span>Stop</span>
             </button>
           )}
+
+          <button
+            type="button"
+            onClick={toggleContinuousMode}
+            aria-label="End live voice session"
+            title="Close live voice capsule"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-700/80 bg-slate-800/40 text-slate-400 transition hover:bg-slate-700/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
         </div>
-        <p className="mt-2 text-center text-[10px] text-[#858098]">Tap the orb to pause or resume. Close to end the live session.</p>
       </section>
     );
   }
@@ -192,8 +230,8 @@ export const GlobalVoiceDock: React.FC = () => {
           1. LIVE INTERIM TRANSCRIPT (Requirement 3: Large type 24px+ above dock)
          ========================================================================= */}
       {isListening && interimTranscript && (
-        <div className="mb-2 pointer-events-auto px-5 py-2.5 rounded-2xl bg-[#0E0C22]/95 border border-violet-500/40 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] animate-in fade-in zoom-in-95 max-w-xl text-center">
-          <p className="text-[24px] sm:text-[26px] font-bold text-white tracking-tight leading-tight select-none">
+        <div className="mb-2 pointer-events-auto px-5 py-2.5 rounded-2xl bg-[#0E1322]/95 border border-indigo-500/40 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] animate-in fade-in zoom-in-95 max-w-xl text-center">
+          <p className="text-[22px] sm:text-[24px] font-bold text-white tracking-tight leading-tight select-none">
             "{interimTranscript}"
           </p>
         </div>
@@ -203,9 +241,9 @@ export const GlobalVoiceDock: React.FC = () => {
           2. PENDING TRANSFER CONFIRMATION MODAL CARD (Voice Actionable)
          ========================================================================= */}
       {pendingTransfer && (
-        <div className="mb-2 pointer-events-auto w-80 rounded-2xl bg-[#120F2A] border-2 border-violet-500/60 p-4 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4">
+        <div className="mb-2 pointer-events-auto w-80 rounded-2xl bg-[#111726] border-2 border-indigo-500/60 p-4 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-violet-300">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-300">
               Transfer Confirmation
             </span>
             <span className="text-[10px] text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/25">
@@ -214,28 +252,28 @@ export const GlobalVoiceDock: React.FC = () => {
           </div>
 
           <div className="text-center py-2 bg-white/[0.02] border border-white/[0.04] rounded-xl mb-3">
-            <span className="text-[12px] text-[#7C7896] block">Sending to</span>
+            <span className="text-[12px] text-slate-400 block">Sending to</span>
             <h4 className="text-[16px] font-bold text-white mt-0.5">{pendingTransfer.payee}</h4>
-            <div className="text-[26px] font-bold text-emerald-400 tabular-nums mt-0.5">
+            <div className="text-[26px] font-bold text-emerald-400 tabular-nums mt-0.5 font-mono">
               ₹{pendingTransfer.amount.toLocaleString('en-IN')}
             </div>
-            <span className="text-[11px] text-[#7C7896] block mt-0.5">from Everyday account (HDFC •• 4821)</span>
+            <span className="text-[11px] text-slate-400 block mt-0.5">from Everyday account (HDFC •• 4821)</span>
           </div>
 
-          <div className="text-[11.5px] text-[#C8C5DC] text-center mb-3">
+          <div className="text-[11.5px] text-slate-300 text-center mb-3">
             Say <strong>"Yes"</strong> or <strong>"Confirm"</strong>, or tap below:
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={confirmTransfer}
-              className="flex-1 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-[12px] shadow-lg transition-transform active:scale-95"
+              className="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[12px] shadow-lg transition-transform active:scale-95"
             >
               Confirm
             </button>
             <button
               onClick={cancelTransfer}
-              className="px-3.5 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-[#7C7896] hover:text-white text-[12px] transition-colors"
+              className="px-3.5 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-slate-400 hover:text-white text-[12px] transition-colors"
             >
               Cancel
             </button>
@@ -247,16 +285,16 @@ export const GlobalVoiceDock: React.FC = () => {
           3. SLIDE-UP ANSWER CARD (When outside AI Assistant page)
          ========================================================================= */}
       {!isAssistantPage && !pendingTransfer && currentResponse && (
-        <div className="mb-2 pointer-events-auto w-[420px] max-w-[90vw] rounded-2xl bg-[#0E0C22]/95 border border-violet-500/30 p-4 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-3 relative">
+        <div className="mb-2 pointer-events-auto w-[420px] max-w-[90vw] rounded-2xl bg-[#0E1322]/95 border border-indigo-500/30 p-4 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-3 relative">
           <button
             onClick={dismissCard}
-            className="absolute top-3 right-3 text-[#7C7896] hover:text-white transition-colors"
+            className="absolute top-3 right-3 text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
 
           <div className="flex items-start gap-2.5 pr-6">
-            <div className="w-7 h-7 rounded-lg bg-violet-600/20 border border-violet-500/30 text-violet-300 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <div className="w-7 h-7 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 flex items-center justify-center flex-shrink-0 mt-0.5">
               <Sparkles className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0 flex-1">

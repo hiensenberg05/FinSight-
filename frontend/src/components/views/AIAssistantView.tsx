@@ -259,219 +259,184 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
   const nextBill = bills[0] || null;
 
   return (
-    <div className="w-full max-w-4xl mx-auto min-h-full flex flex-col justify-between space-y-3 pb-2">
-      {/* 2-COLUMN MAIN GRID */}
-      <div className="grid grid-cols-1 gap-3.5 items-start">
-        {/* LEFT MAIN COLUMN (8 of 12 cols) */}
-        <div className="flex flex-col space-y-3">
-          {/* 1. Hero Voice Greeting Area with Centered Orb & Inline Chips */}
-          <div className="relative rounded-2xl glass-card-3d px-5 py-3 shadow-lg overflow-hidden">
+    <div className="w-full max-w-7xl mx-auto min-h-full flex flex-col space-y-4 pb-16">
+      {/* 2-COLUMN SPLIT COCKPIT */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        {/* =========================================================================
+            LEFT PRIMARY STREAM (7 of 12 cols = ~58%)
+           ========================================================================= */}
+        <div className="lg:col-span-7 flex flex-col space-y-3.5">
+          {/* 1. Header Voice Controller & Quick Action Chips */}
+          <div className="relative rounded-2xl glass-card-3d px-5 py-3.5 shadow-lg overflow-hidden border border-slate-800/80">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2 pr-1">
-              <h2 className="text-[26px] font-extrabold text-metallic-silver tracking-tight leading-tight">FinSight Voice</h2>
-              <div className="flex items-center gap-2 text-[11px] text-[#A29DBE]" aria-label="Voice connection status">
-                <i className={`h-2 w-2 rounded-full ${isWsConnected ? 'bg-emerald-400' : 'bg-amber-400'}`} />
-                <span>{isWsConnected ? 'Voice ready' : 'Voice gateway offline'}</span>
-                {providerStatus.tts_status === 'connected' && <span className="text-emerald-300">· Gnani voice ready</span>}
+              <div>
+                <h2 className="text-[22px] font-extrabold text-metallic-silver tracking-tight leading-tight">
+                  FinSight Voice Co-Pilot
+                </h2>
+                <p className="text-[11.5px] text-slate-300 mt-0.5">
+                  Autonomous financial reasoning grounded in live PostgreSQL ledger & Playwright DOM forensics.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-[11px] text-slate-300 font-mono" aria-label="Voice connection status">
+                <span className={`h-2 w-2 rounded-full ${isWsConnected ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+                <span>{isWsConnected ? '14ms Gateway Connected' : 'Connecting Gateway'}</span>
               </div>
             </div>
 
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mt-1">
-                <div className="px-1.5 py-0.5 rounded-md bg-gradient-to-r from-violet-600 to-indigo-600 border border-violet-400/40 flex items-center gap-0.5 shadow-[0_0_10px_rgba(109,79,255,0.4)]">
-                  <span className="w-[2px] h-2 bg-white rounded-full" />
-                  <span className="w-[2px] h-3 bg-white rounded-full" />
-                  <span className="w-[2px] h-2 bg-white rounded-full" />
-                </div>
-                <span className="text-[13px] font-extrabold text-metallic-violet tracking-tight">
-                  Voice Engine
-                </span>
-
-                {/* Gender choice maps to a language-matched Gnani Timbre voice. */}
-                <div className="flex items-center rounded-full bg-white/[0.06] border border-white/10 p-0.5 shadow-inner" title="Dynamic Indian Voice Persona">
+            {/* Persona & Language Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
+              <div className="flex flex-wrap items-center gap-2">
+                {/* Persona */}
+                <div className="flex items-center rounded-lg bg-slate-900/80 border border-slate-700/80 p-0.5" title="Gnani Voice Persona">
                   <button
                     onClick={() => setVoicePersona('Nalini')}
-                    className={`px-2 py-0.5 rounded-full text-[10.5px] font-bold transition-all ${
+                    className={`px-2.5 py-1 rounded-md text-[10.5px] font-bold transition-all ${
                       voicePersona === 'Nalini'
-                        ? 'bg-violet-600 text-white shadow-[0_0_8px_rgba(124,58,237,0.5)]'
-                        : 'text-[#8E8AA5] hover:text-white'
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
-                    Female voice
+                    Female (Nalini)
                   </button>
                   <button
                     onClick={() => setVoicePersona('Deepak')}
-                    className={`px-2 py-0.5 rounded-full text-[10.5px] font-bold transition-all ${
+                    className={`px-2.5 py-1 rounded-md text-[10.5px] font-bold transition-all ${
                       voicePersona === 'Deepak'
-                        ? 'bg-violet-600 text-white shadow-[0_0_8px_rgba(124,58,237,0.5)]'
-                        : 'text-[#8E8AA5] hover:text-white'
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
-                    Male voice
+                    Male (Deepak)
                   </button>
                 </div>
 
-                {/* Language Mode Selector (Auto / EN / HI) */}
-                <div className="flex items-center rounded-full bg-white/[0.06] border border-white/10 p-0.5 shadow-inner" title="Voice & Speech Language">
+                {/* Language Mode */}
+                <div className="flex items-center rounded-lg bg-slate-900/80 border border-slate-700/80 p-0.5" title="Language Mode">
                   <button
                     onClick={() => setLanguageMode('auto')}
-                    className={`px-2 py-0.5 rounded-full text-[10.5px] font-bold transition-all ${
+                    className={`px-2 py-1 rounded-md text-[10.5px] font-bold transition-all ${
                       languageMode === 'auto'
-                        ? 'bg-cyan-600 text-white shadow-[0_0_8px_rgba(8,145,178,0.5)]'
-                        : 'text-[#8E8AA5] hover:text-white'
+                        ? 'bg-cyan-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     Auto
                   </button>
                   <button
                     onClick={() => setLanguageMode('en')}
-                    className={`px-2 py-0.5 rounded-full text-[10.5px] font-bold transition-all ${
+                    className={`px-2 py-1 rounded-md text-[10.5px] font-bold transition-all ${
                       languageMode === 'en'
-                        ? 'bg-indigo-600 text-white shadow-[0_0_8px_rgba(79,70,229,0.5)]'
-                        : 'text-[#8E8AA5] hover:text-white'
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     English
                   </button>
                   <button
                     onClick={() => setLanguageMode('hi')}
-                    className={`px-2 py-0.5 rounded-full text-[10.5px] font-bold transition-all ${
+                    className={`px-2 py-1 rounded-md text-[10.5px] font-bold transition-all ${
                       languageMode === 'hi'
-                        ? 'bg-emerald-600 text-white shadow-[0_0_8px_rgba(16,185,129,0.5)]'
-                        : 'text-[#8E8AA5] hover:text-white'
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     हिंदी
                   </button>
-                  <button onClick={() => setLanguageMode('hinglish')} aria-pressed={languageMode === 'hinglish'} className={`px-2 py-0.5 rounded-full text-[10.5px] font-bold ${languageMode === 'hinglish' ? 'bg-cyan-700 text-white' : 'text-[#8E8AA5] hover:text-white'}`}>Hinglish</button>
-                </div>
-
-                <button
-                  onClick={toggleContinuousMode}
-                  className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-bold transition-all active:scale-95 shadow-sm ${
-                    isContinuousMode
-                      ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.25)]'
-                      : 'bg-white/[0.05] border-white/20 text-[#8E8AA5] hover:text-white'
-                  }`}
-                  title="Open a live voice session. FinSight will listen again after each reply."
-                  aria-pressed={isContinuousMode}
-                >
-                  <span className={`w-1.5 h-1.5 rounded-full ${isContinuousMode ? 'bg-emerald-400 animate-pulse' : 'bg-gray-400'}`} />
-                  <span>{isContinuousMode ? 'End live voice' : 'Live voice'}</span>
-                </button>
-                {isSpeaking && (
                   <button
-                    onClick={interruptSpeaking}
-                    className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 text-[11px] font-bold hover:bg-rose-500/30 transition-all active:scale-95 shadow-[0_0_10px_rgba(244,63,94,0.3)] animate-pulse"
+                    onClick={() => setLanguageMode('hinglish')}
+                    className={`px-2 py-1 rounded-md text-[10.5px] font-bold transition-all ${
+                      languageMode === 'hinglish'
+                        ? 'bg-cyan-700 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
                   >
-                    <Square className="w-2.5 h-2.5 fill-current" />
-                    <span>Interrupt (Barge-In)</span>
+                    Hinglish
                   </button>
-                )}
+                </div>
               </div>
-              <div className="mt-2 flex flex-wrap items-center gap-2">
-                <span className="text-[11px] text-[#8E8AA5]">Input</span>
-                <button type="button" onClick={() => setInputMode('voice')} aria-pressed={inputMode === 'voice'} className={`min-h-10 rounded-lg border px-3 text-xs ${inputMode === 'voice' ? 'border-violet-400/50 bg-violet-500/15 text-white' : 'border-white/10 text-[#A29DBE]'}`}>Voice</button>
-                <button type="button" onClick={() => setInputMode('text')} aria-pressed={inputMode === 'text'} className={`min-h-10 rounded-lg border px-3 text-xs ${inputMode === 'text' ? 'border-violet-400/50 bg-violet-500/15 text-white' : 'border-white/10 text-[#A29DBE]'}`}>Text</button>
-                {inputMode === 'voice' && <button type="button" onClick={toggleMicMute} aria-pressed={isMicMuted} className="min-h-10 rounded-lg border border-white/10 px-3 text-xs text-[#D2CFE8]">{isMicMuted ? 'Unmute microphone' : 'Mute microphone'}</button>}
-                <button type="button" onClick={toggleMute} aria-pressed={isMuted} className="min-h-10 rounded-lg border border-white/10 px-3 text-xs text-[#D2CFE8]">{isMuted ? 'Unmute audio' : 'Mute audio'}</button>
-                {isSpeaking && <button type="button" onClick={interruptSpeaking} className="min-h-10 rounded-lg border border-rose-400/40 px-3 text-xs text-rose-200">Stop speaking</button>}
-              </div>
-              {voiceError && <div role="alert" className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-200"><span>{voiceError}</span><button type="button" onClick={() => setInputMode('text')} className="min-h-9 underline underline-offset-2">Switch to typing</button></div>}
-              {(interimTranscript || finalTranscript) && inputMode === 'voice' && <p aria-live="polite" className="mt-2 text-sm text-slate-200">{interimTranscript || finalTranscript}</p>}
-              <p className="text-[12px] text-[#8E8AA5] mt-0.5">
-                {isContinuousMode ? (
-                  <span className="text-emerald-400/90 font-medium">
-                    Live voice is on. Speak naturally; tap the orb to pause listening.
-                  </span>
-                ) : (
-                  <span>Ask by voice or text. Your conversation remains available when you switch modes.</span>
-                )}
-              </p>
+
+              {/* Continuous Mode Toggle */}
+              <button
+                onClick={toggleContinuousMode}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg border text-[11px] font-bold transition-all active:scale-95 shadow-sm ${
+                  isContinuousMode
+                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                    : 'bg-slate-900/80 border-slate-700/80 text-slate-300 hover:text-white'
+                }`}
+                title="Continuous hands-free voice co-pilot"
+              >
+                <span className={`w-2 h-2 rounded-full ${isContinuousMode ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
+                <span>{isContinuousMode ? 'Hands-Free Voice Active' : 'Enable Hands-Free Voice'}</span>
+              </button>
             </div>
 
-            {/* Action Chips + Orb */}
-            <div className="flex items-center justify-between gap-2 mt-1">
-              <div className="flex items-center gap-2 z-10 flex-shrink-0">
-                <button
-                  onClick={() =>
-                    handleChipClick(
-                      'spending',
-                      languageMode === 'hi'
-                        ? 'Mera kharcha kahan hua?'
-                        : 'Show me my spending breakdown for this month'
-                    )
-                  }
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11.5px] font-medium transition-all shadow-sm active:scale-95 whitespace-nowrap glass-card-3d glass-card-3d-interactive ${
-                    activeChip === 'spending'
-                      ? 'border-violet-500/70 text-white shadow-[0_0_14px_rgba(109,79,255,0.4)]'
-                      : 'border-white/[0.12] hover:border-violet-500/40 text-[#D2CFE8]'
-                  }`}
-                >
-                  <BarChart2 className="w-3.5 h-3.5 text-violet-400" />
-                  <span>{languageMode === 'hi' ? 'खर्चा Breakdown' : 'Spending Breakdown'}</span>
-                </button>
+            {/* Action Prompt Chips */}
+            <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1 scrollbar-none">
+              <button
+                onClick={() =>
+                  handleChipClick(
+                    'spending',
+                    languageMode === 'hi'
+                      ? 'Mera kharcha kahan hua?'
+                      : 'Show me my spending breakdown for this month'
+                  )
+                }
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11.5px] font-medium transition-all shadow-sm active:scale-95 whitespace-nowrap glass-card-3d glass-card-3d-interactive ${
+                  activeChip === 'spending'
+                    ? 'border-indigo-500/70 text-white shadow-[0_0_14px_rgba(99,102,241,0.4)]'
+                    : 'border-slate-700/80 hover:border-indigo-500/40 text-slate-200'
+                }`}
+              >
+                <BarChart2 className="w-3.5 h-3.5 text-indigo-400" />
+                <span>{languageMode === 'hi' ? 'खर्चा Breakdown' : 'Spending Breakdown'}</span>
+              </button>
 
-                <button
-                  onClick={() =>
-                    handleChipClick(
-                      'budget',
-                      languageMode === 'hi'
-                        ? 'Mera kharch kyu badha?'
-                        : 'Why did my spending change?'
-                    )
-                  }
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11.5px] font-medium transition-all shadow-sm active:scale-95 whitespace-nowrap glass-card-3d glass-card-3d-interactive ${
-                    activeChip === 'budget'
-                      ? 'border-violet-500/70 text-white shadow-[0_0_14px_rgba(109,79,255,0.4)]'
-                      : 'border-white/[0.12] hover:border-violet-500/40 text-[#D2CFE8]'
-                  }`}
-                >
-                  <Target className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>{languageMode === 'hi' ? 'खर्च क्यों बढ़ा?' : 'Why Did Spend Increase?'}</span>
-                </button>
-              </div>
+              <button
+                onClick={() =>
+                  handleChipClick(
+                    'budget',
+                    languageMode === 'hi'
+                      ? 'Mera kharch kyu badha?'
+                      : 'Why did my spending change?'
+                  )
+                }
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11.5px] font-medium transition-all shadow-sm active:scale-95 whitespace-nowrap glass-card-3d glass-card-3d-interactive ${
+                  activeChip === 'budget'
+                    ? 'border-indigo-500/70 text-white shadow-[0_0_14px_rgba(99,102,241,0.4)]'
+                    : 'border-slate-700/80 hover:border-indigo-500/40 text-slate-200'
+                }`}
+              >
+                <Target className="w-3.5 h-3.5 text-cyan-400" />
+                <span>{languageMode === 'hi' ? 'खर्च क्यों बढ़ा?' : 'Why Did Spend Increase?'}</span>
+              </button>
 
-              {/* Centered Sound Orb */}
-              <div className="flex flex-col items-center justify-center flex-shrink-0">
-                <SoundOrbVisualizer
-                  voiceState={voiceState}
-                  audioLevel={audioLevel}
-                  onToggle={handleOrbToggle}
-                  idleLabel={isContinuousMode ? 'Tap to resume' : 'Start live voice'}
-                />
-                <LiveWaveformBars isActive={audioLevelSource === 'microphone' || audioLevelSource === 'playback'} audioLevel={audioLevel} height={18} barCount={21} className="h-5" />
-                    <span className="text-[10px] text-[#77728F]">{audioLevelSource === 'microphone' ? 'Microphone level' : audioLevelSource === 'playback' ? 'Gnani playback level' : audioLevelSource === 'unavailable' ? 'Audio level unavailable' : isContinuousMode ? 'Live conversation' : 'Tap for live conversation'}</span>
-              </div>
-
-              <div className="flex items-center z-10 flex-shrink-0">
-                <button
-                  onClick={() =>
-                    handleChipClick(
-                      'investments',
-                      languageMode === 'hi'
-                        ? 'Koi unusual transactions hai kya?'
-                        : 'Are there any anomalies or irregular charges?'
-                    )
-                  }
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11.5px] font-medium transition-all shadow-sm active:scale-95 whitespace-nowrap glass-card-3d glass-card-3d-interactive ${
-                    activeChip === 'investments'
-                      ? 'border-violet-500/70 text-white shadow-[0_0_14px_rgba(109,79,255,0.4)]'
-                      : 'border-white/[0.12] hover:border-violet-500/40 text-[#D2CFE8]'
-                  }`}
-                >
-                  <TrendingUp className="w-3.5 h-3.5 text-pink-400" />
-                  <span>{languageMode === 'hi' ? 'Anomalies Check' : 'Check Anomalies'}</span>
-                </button>
-              </div>
+              <button
+                onClick={() =>
+                  handleChipClick(
+                    'investments',
+                    languageMode === 'hi'
+                      ? 'Koi unusual transactions hai kya?'
+                      : 'Are there any anomalies or irregular charges?'
+                  )
+                }
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11.5px] font-medium transition-all shadow-sm active:scale-95 whitespace-nowrap glass-card-3d glass-card-3d-interactive ${
+                  activeChip === 'investments'
+                    ? 'border-indigo-500/70 text-white shadow-[0_0_14px_rgba(99,102,241,0.4)]'
+                    : 'border-slate-700/80 hover:border-indigo-500/40 text-slate-200'
+                }`}
+              >
+                <TrendingUp className="w-3.5 h-3.5 text-pink-400" />
+                <span>{languageMode === 'hi' ? 'Anomalies Check' : 'Check Anomalies'}</span>
+              </button>
             </div>
           </div>
 
-          {/* 2. Full Conversation Lookup / Chat History Thread */}
-          <div className="rounded-2xl glass-card-3d border border-violet-500/25 p-4 shadow-xl backdrop-blur-2xl flex flex-col space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+          {/* 2. Full Conversation Thread & Multimodal Sticky Composer */}
+          <div className="rounded-2xl glass-card-3d border border-slate-800/80 p-4 shadow-xl backdrop-blur-2xl flex flex-col space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
               <div className="flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-violet-400" />
-                <h3 className="text-sm font-bold text-white tracking-tight">Conversation</h3>
+                <MessageSquare className="w-4 h-4 text-indigo-400" />
+                <h3 className="text-sm font-bold text-white tracking-tight">Conversation & Reasoning Stream</h3>
               </div>
               <div className="flex items-center gap-2">
                 {(isSpeaking || isPlaybackPaused) && (
@@ -480,7 +445,7 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                     className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
                       isPlaybackPaused
                         ? 'bg-amber-500/20 border-amber-500/40 text-amber-300 hover:bg-amber-500/30'
-                        : 'bg-violet-600/30 border-violet-400/40 text-violet-200 hover:bg-violet-600/40'
+                        : 'bg-indigo-600/30 border-indigo-400/40 text-indigo-200 hover:bg-indigo-600/40'
                     }`}
                     title={isPlaybackPaused ? 'Resume assistant speech' : 'Pause assistant speech'}
                   >
@@ -493,7 +458,7 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                   className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
                     isMuted
                       ? 'bg-rose-500/20 border-rose-500/40 text-rose-300'
-                      : 'bg-white/[0.04] border-white/[0.1] text-violet-300 hover:text-white'
+                      : 'bg-slate-800/60 border-slate-700/80 text-slate-300 hover:text-white'
                   }`}
                   title="Toggle assistant voice audio output"
                 >
@@ -504,47 +469,56 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
             </div>
 
             {/* Scrollable messages container */}
-            <div className="max-h-[380px] overflow-y-auto space-y-3 pr-1.5 scrollbar-thin scrollbar-thumb-violet-600/40">
+            <div className="max-h-[460px] min-h-[280px] overflow-y-auto space-y-3 pr-1.5 scrollbar-thin scrollbar-thumb-indigo-600/40">
+              {transcriptHistory.length === 0 && !streamingText && (
+                <div className="flex flex-col items-center justify-center py-10 text-center space-y-2">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-600/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-1">
+                    <Sparkles className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-[15px] font-bold text-white">Ask FinSight Anything</h4>
+                  <p className="text-[12px] text-slate-400 max-w-md">
+                    Speak or type: <span className="text-slate-200">"Show me my Swiggy order proof"</span>, <span className="text-slate-200">"Why did spend change?"</span>, or <span className="text-slate-200">"Check irregular charges"</span>.
+                  </p>
+                </div>
+              )}
+
               {/* Past completed turns */}
               {[...transcriptHistory].reverse().map((turn) => (
                 <div key={turn.id} className="space-y-2">
                   {/* User Prompt */}
                   <div className="flex justify-end">
-                    <div className="max-w-[85%] rounded-2xl rounded-tr-sm glass-card-3d border-violet-500/40 px-4 py-2 shadow-lg text-right">
-                      <div className="flex items-center justify-end gap-1.5 text-[9.5px] uppercase font-bold tracking-wider text-violet-300 mb-0.5">
+                    <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-indigo-950/40 border border-indigo-500/40 px-4 py-2 shadow-lg text-right">
+                      <div className="flex items-center justify-end gap-1.5 text-[9.5px] uppercase font-bold tracking-wider text-indigo-300 mb-0.5">
                         <span>You</span>
                         <span>·</span>
                         <span>{turn.timestamp}</span>
                       </div>
-                      <p className="text-[13px] font-semibold text-metallic-silver leading-snug">
+                      <p className="text-[13px] font-medium text-slate-100 leading-snug">
                         "{turn.userQuery}"
                       </p>
                     </div>
                   </div>
 
                   {/* Assistant Response */}
-                  <div className="rounded-2xl glass-card-3d border border-white/[0.08] p-3 shadow-md space-y-2">
+                  <div className="rounded-2xl bg-slate-900/80 border border-slate-800/80 p-3.5 shadow-md space-y-2.5">
                     <div className="flex items-start gap-2.5">
-                      <div className="w-7 h-7 rounded-xl bg-violet-600/30 border border-violet-400/40 text-violet-200 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-md">
+                      <div className="w-7 h-7 rounded-xl bg-indigo-600/30 border border-indigo-400/40 text-indigo-200 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-md">
                         <Sparkles className="w-3.5 h-3.5" />
                       </div>
                       <div className="min-w-0 flex-1 space-y-2">
                         <FormattedMessage text={turn.assistantResponse} />
 
-                        {/* Relative Generative Visual Chart / Plot */}
-                        {turn.chartData && turn.chartData.length > 0 && (
-                          <div className="w-full mt-2.5">
-                            <SpendingDonutChart
-                              data={turn.chartData}
-                              title={turn.chartTitle}
-                            />
-                          </div>
-                        )}
-
                         {turn.followUpQuestions && turn.followUpQuestions.length > 0 && (
-                          <div className="flex flex-wrap items-center gap-2 pt-1" aria-label="Suggested follow-up questions">
+                          <div className="flex flex-wrap items-center gap-1.5 pt-1" aria-label="Suggested follow-up questions">
                             {turn.followUpQuestions.map((question) => (
-                              <button key={question} type="button" onClick={() => processQuery(question)} className="min-h-10 rounded-lg border border-violet-400/25 px-3 text-[11px] text-violet-200 hover:bg-violet-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-400">{question}</button>
+                              <button
+                                key={question}
+                                type="button"
+                                onClick={() => processQuery(question)}
+                                className="rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-2.5 py-1 text-[11px] text-indigo-200 hover:bg-indigo-500/20 transition-colors"
+                              >
+                                {question}
+                              </button>
                             ))}
                           </div>
                         )}
@@ -557,14 +531,14 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                               className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-300 bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 px-3 py-1 rounded-full transition-all cursor-pointer shadow-sm"
                             >
                               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                              <span>Verified from {turn.evidence.length} ledger transactions</span>
+                              <span>Verified from {turn.evidence.length} ledger records</span>
                               <ExternalLink className="w-2.5 h-2.5 opacity-60 ml-0.5" />
                             </button>
-                            <span className="text-[10px] text-slate-400 font-mono">Relational SQL Grounding</span>
+                            <span className="text-[10px] text-slate-400 font-mono">Deterministic SQL Grounding</span>
                           </div>
                         )}
 
-                        {/* Action Proposal Card */}
+                        {/* Action Proposal Card in-line */}
                         {turn.actionProposal && (
                           <ActionConfirmationCard
                             proposal={turn.actionProposal}
@@ -573,28 +547,13 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                           />
                         )}
 
-                        {/* Simulation Card */}
-                        {turn.simulationData && (
-                          <InteractiveSimulationCard
-                            initialData={turn.simulationData}
-                            onSliderChange={adjustSimulationSlider}
-                          />
-                        )}
-
-                        {/* Autonomous Portal Evidence Card */}
-                        {turn.portalEvidence && (
-                          <PortalEvidenceCard
-                            evidence={turn.portalEvidence}
-                          />
-                        )}
-
-                        {/* Autonomous Slack Alert Card */}
+                        {/* Slack Alert Card in-line */}
                         {(turn.slackAlert || turn.toolUsed === 'dispatch_slack_alert') && (
                           <SlackAlertCard
                             data={turn.slackAlert || {
                               channel: '#engineering-inventory-tracker',
                               workspace: 'accounting',
-                              alert_type: 'test',
+                              alert_type: 'custom',
                               slack_url: 'https://app.slack.com/client/T09MCF0UERJ/C09M5ETUMPF',
                               dm_url: 'https://app.slack.com/client/T09MCF0UERJ/D0CFWN1310F',
                               status: 'delivered',
@@ -612,24 +571,24 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                 <div className="space-y-2">
                   {finalTranscript && (
                     <div className="flex justify-end">
-                      <div className="max-w-[85%] rounded-2xl rounded-tr-sm glass-card-3d border-violet-500/40 px-4 py-2 shadow-lg text-right">
-                        <span className="text-[10px] uppercase font-bold tracking-wider text-violet-300 block">You</span>
-                        <p className="text-[13px] font-semibold text-metallic-silver leading-snug mt-0.5">"{finalTranscript}"</p>
+                      <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-indigo-950/40 border border-indigo-500/40 px-4 py-2 shadow-lg text-right">
+                        <span className="text-[10px] uppercase font-bold tracking-wider text-indigo-300 block">You</span>
+                        <p className="text-[13px] font-medium text-slate-100 leading-snug mt-0.5">"{finalTranscript}"</p>
                       </div>
                     </div>
                   )}
 
                   {/* Assistant Streaming Bubble */}
-                  <div className="rounded-2xl glass-card-3d border border-violet-500/35 p-3.5 shadow-xl relative backdrop-blur-2xl">
+                  <div className="rounded-2xl bg-slate-900/90 border border-indigo-500/40 p-3.5 shadow-xl relative backdrop-blur-2xl">
                     <div className="flex items-start gap-2.5">
-                      <div className="w-7 h-7 rounded-xl bg-violet-600/30 border border-violet-400/40 text-violet-200 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-md">
+                      <div className="w-7 h-7 rounded-xl bg-indigo-600/30 border border-indigo-400/40 text-indigo-200 flex items-center justify-center flex-shrink-0 mt-0.5 shadow-md">
                         <Sparkles className="w-3.5 h-3.5" />
                       </div>
                       <div className="min-w-0 flex-1">
                         {isProcessing && !streamingText ? (
-                          <div className="flex items-center gap-2 text-[12.5px] text-violet-300">
-                            <span className="w-2 h-2 rounded-full bg-violet-400 animate-ping" />
-                            <span>{voiceState === 'tool_execution' ? 'Retrieving the requested financial data…' : 'Preparing your answer…'}</span>
+                          <div className="flex items-center gap-2 text-[12.5px] text-indigo-300">
+                            <span className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
+                            <span>{voiceState === 'tool_execution' ? 'Executing verified SQL tool & forensics…' : 'Reasoning with database…'}</span>
                           </div>
                         ) : (
                           <div>
@@ -642,220 +601,110 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                 </div>
               )}
 
-              {/* Live Operational Action Proposal Card */}
-              {pendingAction && (
-                <ActionConfirmationCard
-                  proposal={pendingAction}
-                  onConfirm={confirmActionProposal}
-                  onCancel={cancelActionProposal}
-                />
-              )}
-
-              {/* Live Predictive Advisory What-If Simulation Card */}
-              {activeSimulation && (
-                <InteractiveSimulationCard
-                  initialData={activeSimulation}
-                  onSliderChange={adjustSimulationSlider}
-                />
-              )}
-
-              {/* Live Autonomous Portal Forensic Evidence Card */}
-              {activePortalEvidence && (
-                <PortalEvidenceCard
-                  evidence={activePortalEvidence}
-                  onDismiss={dismissPortalEvidence}
-                />
-              )}
-
               <div ref={chatBottomRef} />
             </div>
 
-            {/* Text entry remains in the same conversation when the user changes modes. */}
-            {inputMode === 'text' ? (
-              <form onSubmit={(event) => { event.preventDefault(); handleSendChat(); }} className="pt-2 border-t border-white/[0.08] flex items-center gap-2">
-                <label htmlFor="assistant-question" className="sr-only">Ask FinSight a question</label>
-                <input
-                  id="assistant-question"
-                  type="text"
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  placeholder={languageMode === 'hi' ? 'अपना सवाल लिखें' : 'Write a question about your finances'}
-                  className="min-h-11 w-full min-w-0 rounded-xl bg-white/[0.04] border border-white/[0.12] focus:border-violet-500/60 focus:bg-white/[0.07] px-3.5 py-2.5 text-sm text-white placeholder-[#8E8AA5] transition-all focus:outline-none shadow-inner"
-                />
-                <button type="submit" disabled={!chatInput.trim()} className="flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-30 text-white transition-all" aria-label="Send question">
+            {/* =========================================================================
+                PERMANENT MULTIMODAL COMPOSER: Never hidden, always interactive
+               ========================================================================= */}
+            <div className="pt-3 border-t border-slate-800/80">
+              <form onSubmit={(e) => { e.preventDefault(); handleSendChat(); }} className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    placeholder={languageMode === 'hi' ? 'अपना सवाल लिखें या बोलें...' : 'Type query or edit numbers while listening...'}
+                    className="w-full min-h-[46px] rounded-xl bg-slate-900/90 border border-slate-700/80 focus:border-indigo-500/80 focus:bg-slate-900 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-400 transition-all focus:outline-none shadow-inner"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  disabled={isProcessing}
+                  title={isListening ? 'Stop listening' : 'Start speaking'}
+                  className={`min-h-[46px] min-w-[46px] rounded-xl flex items-center justify-center transition-all ${
+                    isListening
+                      ? 'bg-rose-500/20 border border-rose-500/40 text-rose-300 animate-pulse'
+                      : 'bg-slate-800/80 border border-slate-700/80 text-slate-300 hover:text-white hover:bg-slate-700/80'
+                  }`}
+                >
+                  <Mic className="w-4 h-4" />
+                </button>
+                <button
+                  type="submit"
+                  disabled={!chatInput.trim()}
+                  className="min-h-[46px] min-w-[46px] rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-30 text-white flex items-center justify-center transition-all shadow-md active:scale-95"
+                  title="Send prompt"
+                >
                   <Send className="w-4 h-4" />
                 </button>
               </form>
-            ) : (
-              <div className="pt-2 border-t border-white/[0.08] flex items-center justify-between gap-3">
-                <span className="text-xs text-[#8E8AA5]">{isListening ? 'Speak now; your transcript appears above.' : isProcessing ? 'The assistant is working on this turn.' : isSpeaking ? 'The answer is playing.' : 'Voice input is ready when you are.'}</span>
-                <button type="button" onClick={toggleListening} disabled={isMicMuted || isProcessing} className="min-h-11 min-w-11 rounded-full bg-violet-600 px-4 text-sm font-semibold text-white disabled:opacity-40" aria-label={isListening ? 'Stop listening' : 'Start speaking'}>{isListening ? 'Finish' : 'Speak'}</button>
-              </div>
-            )}
-          </div>
 
-            {/* Split Two Cards Row: Real Spending Breakdown + Real Database Transactions */}
-            <div className="hidden grid-cols-1 md:grid-cols-2 gap-3.5 items-start">
-              {/* Card 1: Real Database Category Breakdown Donut */}
-              <div className="rounded-2xl glass-card-3d glass-card-3d-interactive p-4 shadow-sm flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-[14px] font-extrabold text-metallic-silver tracking-tight">
-                      Spending Breakdown
-                    </h3>
-                    <span className="text-[11px] font-medium text-[#8E8AA5]">
-                      {healthMetrics?.period || 'Period unavailable'}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 py-1">
-                    <div className="relative w-28 h-28 flex items-center justify-center flex-shrink-0">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={categories}
-                            dataKey="amount"
-                            nameKey="name"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={34}
-                            outerRadius={48}
-                            paddingAngle={3}
-                            cornerRadius={4}
-                            stroke="rgba(0,0,0,0.3)"
-                            strokeWidth={1}
-                            isAnimationActive={false}
-                          >
-                            {categories.map((entry, index) => (
-                              <Cell key={`donut-${index}`} fill={entry.color || '#8B5CF6'} />
-                            ))}
-                          </Pie>
-                          <Tooltip
-                            content={({ active, payload }) => {
-                              if (active && payload && payload.length) {
-                                const data = payload[0].payload as CategorySpending;
-                                return (
-                                  <div className="glass-card-3d border border-white/[0.15] p-2 rounded-lg text-xs text-white shadow-xl">
-                                    <p className="font-semibold text-white">{data.name}</p>
-                                    <p className="text-metallic-violet font-extrabold tabular-nums">{formatINR(data.amount)} ({data.percentage}%)</p>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            }}
-                          />
-                        </PieChart>
-                      </ResponsiveContainer>
-
-                      <div className="absolute inset-4 rounded-full glass-inset-tray flex flex-col items-center justify-center pointer-events-none border border-white/[0.08]">
-                        <span className="text-[12px] font-extrabold text-metallic-silver tabular-nums leading-none">
-                          {categories.length ? formatINR(totalSpent) : '—'}
-                        </span>
-                        <span className="text-[8.5px] font-medium text-[#8E8AA5] mt-0.5 uppercase tracking-wider">
-                          Total
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Category List from Database */}
-                    <div className="space-y-1.5 flex-1 text-[11px]">
-                      {categories.slice(0, 5).map((cat) => (
-                        <div key={cat.name} className="flex items-center justify-between glass-card-3d px-2 py-1 rounded-lg">
-                          <div className="flex items-center gap-1.5 truncate">
-                            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: cat.color || '#8B5CF6' }} />
-                            <span className="text-[#C8C5DC] truncate font-medium">{cat.name}</span>
-                          </div>
-                          <span className="text-[#8E8AA5] font-semibold tabular-nums ml-2">
-                            {cat.percentage}%
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              <div className="flex items-center justify-between mt-2 px-1 text-[11px] text-slate-400 font-medium">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${isListening ? 'bg-cyan-400 animate-pulse' : isSpeaking ? 'bg-indigo-400' : 'bg-emerald-400'}`} />
+                  <span>{isListening ? 'Listening hands-free...' : isSpeaking ? 'Assistant speaking · Type or interrupt anytime' : 'Multimodal: type or speak freely'}</span>
                 </div>
-
-                <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-emerald-400 font-semibold">
-                  <span>Category totals from the returned data</span>
-                </div>
-              </div>
-
-              {/* Card 2: Real Database Recent Transactions */}
-              <div className="rounded-2xl glass-card-3d glass-card-3d-interactive p-4 shadow-sm flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-[14px] font-extrabold text-metallic-silver tracking-tight">
-                      Recent Transactions
-                    </h3>
-                    <button
-                      onClick={() => onSelectTab?.('transactions')}
-                      className="text-[11px] text-violet-400 hover:text-violet-300 font-medium transition-colors"
-                    >
-                      View transactions
-                    </button>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    {recentTxns.map((tx) => (
-                      <div 
-                        key={tx.id}
-                        className="flex items-center justify-between py-1.5 border-b border-white/[0.04] last:border-0"
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-7 h-7 rounded-xl bg-violet-600/30 text-violet-200 font-bold text-[11px] flex items-center justify-center shadow-md flex-shrink-0 border-t border-white/[0.2] border-b border-black/40">
-                            {tx.merchant ? tx.merchant[0] : 'T'}
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[12.5px] font-semibold text-white block leading-tight">
-                                {tx.merchant}
-                              </span>
-                              {tx.isAnomaly && (
-                                <span className="flex items-center gap-0.5 text-[9.5px] font-bold text-amber-300 bg-amber-500/20 border border-amber-500/40 px-1 py-0.2 rounded">
-                                  <AlertTriangle className="w-2.5 h-2.5" />
-                                  <span>AI Flag</span>
-                                </span>
-                              )}
-                            </div>
-                            <span className="text-[10.5px] text-[#8E8AA5] block mt-0.5">
-                              {tx.category} · {tx.dateStr || tx.date}
-                            </span>
-                          </div>
-                        </div>
-                        <span className={`text-[12.5px] font-bold tabular-nums text-right ${tx.amount > 0 ? 'text-emerald-400' : 'text-metallic-silver'}`}>
-                          {tx.amount > 0 ? `+${formatINR(tx.amount)}` : formatINR(tx.amount)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                {isSpeaking && (
+                  <button
+                    type="button"
+                    onClick={interruptSpeaking}
+                    className="text-rose-400 hover:text-rose-300 font-semibold transition-colors flex items-center gap-1"
+                  >
+                    <Square className="w-2.5 h-2.5 fill-current" /> Stop Audio
+                  </button>
+                )}
               </div>
             </div>
           </div>
+        </div>
 
-        {/* RIGHT RAIL (4 of 12 cols) */}
-        <div className="hidden flex-col space-y-3 items-stretch">
-          {/* Card 1: Next Upcoming Bill from Database */}
-          {nextBill && <div className="rounded-2xl glass-card-3d glass-card-3d-interactive p-3.5 flex items-center gap-3 shadow-sm">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-b from-violet-600/30 to-violet-950/50 border-t border-violet-400/40 border-b border-black/40 flex items-center justify-center text-violet-300 flex-shrink-0 shadow-md">
-              <Calendar className="w-4 h-4" />
+        {/* =========================================================================
+            RIGHT DEDICATED EVIDENCE INSPECTOR (5 of 12 cols = ~42%)
+           ========================================================================= */}
+        <div className="lg:col-span-5 flex flex-col space-y-3.5 sticky top-2">
+          {/* Header */}
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <h3 className="text-[13.5px] font-bold text-slate-100 tracking-tight">Contextual Evidence Inspector</h3>
             </div>
-            <div className="min-w-0 flex-1">
-              <h4 className="text-[13.5px] font-extrabold text-metallic-silver tracking-tight leading-tight">
-                {getTodayFormatted()}
-              </h4>
-              <p className="text-[11.5px] text-metallic-violet mt-0.5 font-bold truncate leading-tight">
-                Next bill: {nextBill.name} · {formatINR(nextBill.amount)} (Due in {nextBill.daysLeft}d)
-              </p>
-            </div>
-          </div>}
+            <span className="text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+              Live Relational Grounding
+            </span>
+          </div>
 
-          {/* Card 2: Financial Health Score from Database Analytics */}
-          <div className="rounded-2xl glass-card-3d glass-card-3d-interactive p-4 flex flex-col justify-between shadow-sm">
+          {/* Slot 1: Active Playwright DOM Portal Evidence Card (Swiggy / BESCOM) */}
+          {activePortalEvidence && (
+            <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+              <PortalEvidenceCard
+                evidence={activePortalEvidence}
+                onDismiss={dismissPortalEvidence}
+              />
+            </div>
+          )}
+
+          {/* Slot 2: Active What-If Interactive Simulation Card */}
+          {activeSimulation && (
+            <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+              <InteractiveSimulationCard
+                initialData={activeSimulation}
+                onSliderChange={adjustSimulationSlider}
+              />
+            </div>
+          )}
+
+          {/* Slot 3: Financial Health Score Meter */}
+          <div className="rounded-2xl glass-card-3d p-4 flex flex-col justify-between shadow-sm border border-slate-800/80">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <h3 className="text-[14px] font-extrabold text-metallic-silver tracking-tight">
+                <h4 className="text-[13px] font-bold text-slate-200 tracking-tight">
                   Financial Health Score
-                </h3>
+                </h4>
+                <span className="text-[10.5px] font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                  {healthMetrics?.rating || 'Calculating'}
+                </span>
               </div>
 
               {/* Semicircle Gauge Meter */}
@@ -864,18 +713,18 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                   <svg viewBox="0 0 100 60" className="w-40 h-24">
                     <defs>
                       <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#38BDF8" />
-                        <stop offset="50%" stopColor="#818CF8" />
-                        <stop offset="100%" stopColor="#C084FC" />
+                        <stop offset="0%" stopColor="#06B6D4" />
+                        <stop offset="50%" stopColor="#6366F1" />
+                        <stop offset="100%" stopColor="#A855F7" />
                       </linearGradient>
                       <filter id="healthGlow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#818CF8" floodOpacity="0.6" />
+                        <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#6366F1" floodOpacity="0.5" />
                       </filter>
                     </defs>
                     <path
                       d="M 15 52 A 35 35 0 0 1 85 52"
                       fill="none"
-                      stroke="#131024"
+                      stroke="#1E293B"
                       strokeWidth="8"
                       strokeLinecap="round"
                     />
@@ -892,131 +741,193 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                   </svg>
 
                   <div className="absolute bottom-1 inset-x-0 flex flex-col items-center justify-center">
-                    <span className="text-[30px] font-extrabold text-metallic-silver tabular-nums leading-none">
+                    <span className="text-[28px] font-extrabold text-white tabular-nums leading-none font-mono">
                       {healthMetrics?.score ?? '—'}
                     </span>
-                    <span className="text-[11px] font-bold text-emerald-400 mt-0.5 uppercase tracking-wider">
-                      {healthMetrics?.rating || 'No data'}
-                    </span>
+                    <span className="text-[10px] text-slate-400 mt-0.5">out of 100</span>
                   </div>
                 </div>
 
-                <div className="w-32 flex items-center justify-between text-[10px] text-[#5A5675] font-semibold -mt-1 px-1">
+                <div className="w-32 flex items-center justify-between text-[10px] text-slate-400 font-mono -mt-1 px-1">
                   <span>0</span>
                   <span>100</span>
                 </div>
               </div>
             </div>
 
-            <p className="text-[11.5px] text-[#8E8AA5] text-center pt-1.5 border-t border-white/[0.06]">
-              {healthMetrics?.summary || 'No current financial health summary is available.'}
+            <p className="text-[11px] text-slate-300 text-center pt-2 border-t border-slate-800/80 leading-relaxed">
+              {healthMetrics?.summary || 'Deterministic SQL metrics computed across all active accounts.'}
             </p>
           </div>
 
-          {/* Card 3: Quick Insights from Real Database Computations */}
-          <div className="rounded-2xl glass-card-3d glass-card-3d-interactive p-4 flex flex-col justify-between shadow-sm">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Activity className="w-4 h-4 text-violet-400" />
-                <h3 className="text-[14px] font-extrabold text-metallic-silver tracking-tight">
-                  Quick Insights
-                </h3>
+          {/* Slot 4: Quick Insights (Balance, Savings, Bills) */}
+          <div className="rounded-2xl glass-card-3d p-4 space-y-2.5 shadow-sm border border-slate-800/80">
+            <div className="flex items-center gap-2 mb-1">
+              <Activity className="w-3.5 h-3.5 text-indigo-400" />
+              <h4 className="text-[13px] font-bold text-slate-200 tracking-tight">
+                Quick Ledger Insights
+              </h4>
+            </div>
+
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between py-1.5 border-b border-slate-800/80">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                    <ArrowUp className="w-3 h-3" />
+                  </div>
+                  <div>
+                    <span className="text-[13px] font-bold text-white tabular-nums font-mono block leading-tight">
+                      {healthMetrics?.availableBalance != null ? formatINR(healthMetrics.availableBalance) : '—'}
+                    </span>
+                    <span className="text-[10.5px] text-slate-400 block">Available Balance</span>
+                  </div>
+                </div>
+                <span className="text-[10.5px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2 py-0.5 rounded-full">
+                  Active
+                </span>
               </div>
 
-              <div className="space-y-1.5">
-                {/* Available Balance */}
-                <div className="flex items-center justify-between py-1 border-b border-white/[0.04]">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-lg bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 flex-shrink-0">
-                      <ArrowUp className="w-3 h-3" />
-                    </div>
-                    <div>
-                      <span className="text-[13px] font-extrabold text-metallic-silver tabular-nums block leading-tight">
-                        {healthMetrics?.availableBalance != null ? formatINR(healthMetrics.availableBalance) : '—'}
-                      </span>
-                      <span className="text-[10.5px] text-[#7C7896] block mt-0.5">
-                        Available Balance
-                      </span>
-                    </div>
+              <div className="flex items-center justify-between py-1.5 border-b border-slate-800/80">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center text-indigo-300 flex-shrink-0">
+                    <Target className="w-3 h-3" />
                   </div>
-                  <span className="text-[10.5px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                    Active
-                  </span>
-                </div>
-
-                {/* Monthly Savings */}
-                <div className="flex items-center justify-between py-1 border-b border-white/[0.04]">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-lg bg-violet-500/15 border border-violet-500/25 flex items-center justify-center text-violet-300 flex-shrink-0">
-                      <Target className="w-3 h-3" />
-                    </div>
-                    <div>
-                    <span className={`text-[13px] font-extrabold tabular-nums block leading-tight ${
-                        (healthMetrics?.monthlySavings ?? 0) < 0 ? 'text-rose-300' : 'text-metallic-silver'
-                      }`}>
-                        {healthMetrics?.monthlySavings != null ? formatINR(healthMetrics.monthlySavings) : '—'}
-                      </span>
-                      <span className="text-[10.5px] text-[#7C7896] block mt-0.5">
-                        Monthly Savings
-                      </span>
-                    </div>
-                  </div>
-                  {healthMetrics?.monthlySavings != null ? (healthMetrics.monthlySavings < 0 ? (
-                    <span className="text-[10.5px] font-semibold text-rose-400 bg-rose-500/15 border border-rose-500/30 px-2 py-0.5 rounded-full">
-                      Deficit
+                  <div>
+                    <span className={`text-[13px] font-bold tabular-nums font-mono block leading-tight ${
+                      (healthMetrics?.monthlySavings ?? 0) < 0 ? 'text-rose-400' : 'text-emerald-400'
+                    }`}>
+                      {healthMetrics?.monthlySavings != null ? formatINR(healthMetrics.monthlySavings) : '—'}
                     </span>
-                  ) : (
-                    <span className="text-[10.5px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2 py-0.5 rounded-full">
-                      On track
-                    </span>
-                  )) : <span className="text-[10.5px] text-[#77728F]">No data</span>}
-                </div>
-
-                {/* Pending Bills */}
-                <div className="flex items-center justify-between py-1">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-lg bg-pink-500/15 border border-pink-500/25 flex items-center justify-center text-pink-400 flex-shrink-0">
-                      <Calendar className="w-3 h-3" />
-                    </div>
-                    <div>
-                      <span className="text-[13px] font-extrabold text-metallic-silver tabular-nums block leading-tight">
-                        {bills.length ? formatINR(bills.reduce((s, b) => s + b.amount, 0)) : '—'}
-                      </span>
-                      <span className="text-[10.5px] text-[#7C7896] block mt-0.5">
-                        Upcoming Bills
-                      </span>
-                    </div>
+                    <span className="text-[10.5px] text-slate-400 block">Monthly Savings</span>
                   </div>
-                  <span className="text-[10.5px] font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                    {bills.length} due
-                  </span>
                 </div>
+                <span className={`text-[10.5px] font-semibold px-2 py-0.5 rounded-full ${
+                  (healthMetrics?.monthlySavings ?? 0) < 0
+                    ? 'text-rose-400 bg-rose-500/15 border border-rose-500/30'
+                    : 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/25'
+                }`}>
+                  {(healthMetrics?.monthlySavings ?? 0) < 0 ? 'Deficit' : 'On track'}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between py-1.5">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-pink-500/15 border border-pink-500/25 flex items-center justify-center text-pink-400 flex-shrink-0">
+                    <Calendar className="w-3 h-3" />
+                  </div>
+                  <div>
+                    <span className="text-[13px] font-bold text-white tabular-nums font-mono block leading-tight">
+                      {bills.length ? formatINR(bills.reduce((s, b) => s + b.amount, 0)) : '—'}
+                    </span>
+                    <span className="text-[10.5px] text-slate-400 block">Upcoming Bills</span>
+                  </div>
+                </div>
+                <span className="text-[10.5px] font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-full">
+                  {bills.length} due
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Card 4: Recent Voice Inquiries with Latency History */}
-          <div className="rounded-2xl glass-card-3d glass-card-3d-interactive p-4 flex flex-col justify-between shadow-sm">
-            <div>
+          {/* Slot 5: Category Spending Donut Chart */}
+          {categories.length > 0 && (
+            <div className="rounded-2xl glass-card-3d p-4 shadow-sm border border-slate-800/80">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-[14px] font-extrabold text-metallic-silver tracking-tight">
-                  Voice Inquiries & Latency
-                </h3>
-                <span className="text-[10px] text-metallic-violet font-mono font-bold">
-                  Last {transcriptHistory.length}
+                <h4 className="text-[13px] font-bold text-slate-200 tracking-tight">
+                  Spending Breakdown
+                </h4>
+                <span className="text-[10.5px] text-slate-400 font-mono">
+                  Total: {formatINR(totalSpent)}
                 </span>
               </div>
+              <div className="flex items-center justify-between gap-3 py-1">
+                <div className="relative w-28 h-28 flex items-center justify-center flex-shrink-0">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={categories}
+                        dataKey="amount"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={32}
+                        outerRadius={46}
+                        paddingAngle={3}
+                        cornerRadius={4}
+                        stroke="rgba(0,0,0,0.3)"
+                        strokeWidth={1}
+                        isAnimationActive={false}
+                      >
+                        {categories.map((entry, index) => (
+                          <Cell key={`donut-${index}`} fill={entry.color || '#6366F1'} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length) {
+                            const data = payload[0].payload as CategorySpending;
+                            return (
+                              <div className="bg-slate-900 border border-slate-700 p-2 rounded-lg text-xs text-white shadow-xl">
+                                <p className="font-semibold text-white">{data.name}</p>
+                                <p className="text-indigo-400 font-mono tabular-nums">{formatINR(data.amount)} ({data.percentage}%)</p>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <div className="absolute inset-4 rounded-full bg-slate-900/90 flex flex-col items-center justify-center pointer-events-none border border-slate-700/60">
+                    <span className="text-[11px] font-bold text-white tabular-nums font-mono leading-none">
+                      {formatINR(totalSpent)}
+                    </span>
+                  </div>
+                </div>
 
-              <div className="space-y-2">
-                {transcriptHistory.slice(0, 3).map((item) => (
-                  <div key={item.id} className="p-2 rounded-xl glass-card-3d border border-white/[0.04]">
+                <div className="space-y-1 flex-1 text-[11px]">
+                  {categories.slice(0, 4).map((cat) => (
+                    <div key={cat.name} className="flex items-center justify-between px-2 py-0.5 rounded bg-slate-900/40">
+                      <div className="flex items-center gap-1.5 truncate">
+                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: cat.color || '#6366F1' }} />
+                        <span className="text-slate-300 truncate font-medium">{cat.name}</span>
+                      </div>
+                      <span className="text-slate-400 font-mono tabular-nums ml-2">
+                        {cat.percentage}%
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Slot 6: Voice Telemetry & Turn Latency History */}
+          <div className="rounded-2xl glass-card-3d p-4 shadow-sm border border-slate-800/80">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-[13px] font-bold text-slate-200 tracking-tight">
+                Voice Inquiries & Engine Telemetry
+              </h4>
+              <span className="text-[10px] text-indigo-400 font-mono font-bold">
+                Last {transcriptHistory.length} turns
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              {transcriptHistory.length === 0 ? (
+                <p className="text-[11px] text-slate-400 text-center py-2">
+                  No turns yet. Speak or type to begin your financial session.
+                </p>
+              ) : (
+                transcriptHistory.slice(0, 3).map((item) => (
+                  <div key={item.id} className="p-2 rounded-xl bg-slate-900/60 border border-slate-800/80">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11.5px] font-semibold text-white truncate max-w-[190px]">
+                      <span className="text-[11.5px] font-semibold text-white truncate max-w-[200px]">
                         "{item.userQuery}"
                       </span>
-                      <span className="text-[9.5px] text-[#7C7896]">{item.timestamp}</span>
+                      <span className="text-[9.5px] text-slate-400">{item.timestamp}</span>
                     </div>
-                    <p className="text-[10.5px] text-[#A29DBE] line-clamp-1 mt-0.5">
+                    <p className="text-[10.5px] text-slate-300 line-clamp-1 mt-0.5">
                       {item.assistantResponse}
                     </p>
                     {item.latencies && (
@@ -1025,12 +936,12 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
                         <span>·</span>
                         <span>tool: {item.latencies.tool_ms ?? '—'}ms</span>
                         <span>·</span>
-                        <span>LLM first text: {item.latencies.generation_ttft_ms ?? '—'}ms</span>
+                        <span>first text: {item.latencies.generation_ttft_ms ?? '—'}ms</span>
                       </div>
                     )}
                   </div>
-                ))}
-              </div>
+                ))
+              )}
             </div>
           </div>
         </div>

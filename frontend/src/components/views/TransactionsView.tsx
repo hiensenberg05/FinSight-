@@ -188,28 +188,28 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({ onSelectTab 
       </div>
 
       {/* Transactions Table */}
-      <div className="max-w-[1200px] rounded-2xl glass-card-3d overflow-hidden shadow-lg border border-white/[0.08]">
+      <div className="max-w-[1200px] rounded-2xl glass-card-3d overflow-hidden shadow-lg border border-slate-800/80">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#100D22]/90 border-b border-white/[0.08] text-[#8E8AA5] uppercase text-[11px] font-bold tracking-wider">
+            <thead className="bg-[#0E1322] border-b border-slate-800/80 text-slate-400 uppercase text-[11px] font-bold tracking-wider">
               <tr>
-                <th className="py-3 px-5 w-28">Date</th>
-                <th className="py-3 px-5">Merchant / Counterparty</th>
-                <th className="py-3 px-5 w-48">Category</th>
-                <th className="py-3 px-5 w-28">Channel</th>
-                <th className="py-3 px-5 text-right w-36">Amount</th>
+                <th className="py-3.5 px-5 w-28">Date</th>
+                <th className="py-3.5 px-5">Merchant / Counterparty</th>
+                <th className="py-3.5 px-5 w-48">Category</th>
+                <th className="py-3.5 px-5 w-28">Channel</th>
+                <th className="py-3.5 px-5 text-right w-36">Amount</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.04]">
+            <tbody className="divide-y divide-slate-800/60">
               {isLoading ? (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-[#8E8AA5] text-[13px]">
+                  <td colSpan={5} className="py-8 text-center text-slate-400 text-[13px]">
                     Loading real transactions from database...
                   </td>
                 </tr>
               ) : filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-[#8E8AA5] text-[13px]">
+                  <td colSpan={5} className="py-8 text-center text-slate-400 text-[13px]">
                     No transactions match your search filter.
                   </td>
                 </tr>
@@ -220,16 +220,16 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({ onSelectTab 
                   return (
                     <tr
                       key={tx.id}
-                      className={`hover:bg-white/[0.02] transition-colors ${
+                      className={`hover:bg-slate-800/30 transition-colors ${
                         tx.isAnomaly ? 'bg-amber-500/[0.04]' : ''
                       }`}
                     >
-                      <td className="py-3 px-5 text-[12px] text-[#8E8AA5] font-medium whitespace-nowrap">
+                      <td className="py-3 px-5 text-[12px] text-slate-400 font-mono font-medium whitespace-nowrap">
                         {tx.dateStr || tx.date}
                       </td>
                       <td className="py-3 px-5">
                         <div className="flex items-center gap-2">
-                          <span className="text-[13px] font-semibold text-white">
+                          <span className="text-[13px] font-semibold text-slate-100">
                             {tx.merchant}
                           </span>
                           {tx.isAnomaly && (
@@ -258,11 +258,11 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({ onSelectTab 
                           {tx.category}
                         </span>
                       </td>
-                      <td className="py-3 px-5 text-[12px] text-[#8E8AA5] font-medium">
+                      <td className="py-3 px-5 text-[12px] text-slate-400 font-medium">
                         {tx.channel || 'UPI'}
                       </td>
-                      <td className="py-3 px-5 text-right font-extrabold text-[13.5px] tabular-nums whitespace-nowrap">
-                        <span className={isIncome ? 'text-emerald-400' : 'text-metallic-silver'}>
+                      <td className="py-3 px-5 text-right font-bold text-[13.5px] tabular-nums font-mono whitespace-nowrap">
+                        <span className={isIncome ? 'text-emerald-400' : 'text-slate-100'}>
                           {isIncome ? `+${formatINR(Math.abs(tx.amount))}` : formatINR(tx.amount)}
                         </span>
                       </td>
