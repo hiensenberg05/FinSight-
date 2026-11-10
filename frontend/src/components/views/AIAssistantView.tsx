@@ -266,15 +266,16 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
             LEFT PRIMARY STREAM (7 of 12 cols = ~58%)
            ========================================================================= */}
         <div className="lg:col-span-7 flex flex-col space-y-3.5">
-          {/* 1. Header Voice Controller & Quick Action Chips */}
-          <div className="relative rounded-2xl glass-card-3d px-5 py-3.5 shadow-lg overflow-hidden border border-slate-800/80">
+          {/* 1. Live 3D Voice Station with Three.js Interactive Sphere */}
+          <div className="relative rounded-2xl glass-card-3d px-5 py-4 shadow-xl overflow-hidden border border-slate-800/80 bg-gradient-to-b from-[#111728]/90 via-[#0E1322]/95 to-[#0B0F17]/90">
+            {/* Top Bar: Title, Engine Status & Persona / Language Selectors */}
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2 pr-1">
               <div>
-                <h2 className="text-[22px] font-extrabold text-metallic-silver tracking-tight leading-tight">
-                  FinSight Voice Co-Pilot
+                <h2 className="text-[20px] font-extrabold text-metallic-silver tracking-tight leading-tight">
+                  FinSight 3D Live Voice Co-Pilot
                 </h2>
                 <p className="text-[11.5px] text-slate-300 mt-0.5">
-                  Autonomous financial reasoning grounded in live PostgreSQL ledger & Playwright DOM forensics.
+                  Real-time live dialogue grounded in PostgreSQL ledger math & Playwright DOM forensic proof.
                 </p>
               </div>
               <div className="flex items-center gap-2 text-[11px] text-slate-300 font-mono" aria-label="Voice connection status">
@@ -284,7 +285,7 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
             </div>
 
             {/* Persona & Language Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
+            <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-t border-b border-slate-800/80">
               <div className="flex flex-wrap items-center gap-2">
                 {/* Persona */}
                 <div className="flex items-center rounded-lg bg-slate-900/80 border border-slate-700/80 p-0.5" title="Gnani Voice Persona">
@@ -370,8 +371,80 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
               </button>
             </div>
 
+            {/* =========================================================================
+                CENTERED 3D INTERACTIVE THREE.JS SOUND ORB SPHERE
+               ========================================================================= */}
+            <div className="flex flex-col items-center justify-center my-3 relative">
+              <div 
+                className="relative w-[210px] h-[210px] sm:w-[230px] sm:h-[230px] flex items-center justify-center cursor-pointer group"
+                onClick={handleOrbToggle}
+                title={isContinuousMode ? "Tap to pause hands-free listening" : "Tap to speak live to live"}
+              >
+                <SoundOrbVisualizer
+                  voiceState={voiceState}
+                  audioLevel={audioLevel}
+                  onToggle={handleOrbToggle}
+                  idleLabel={isContinuousMode ? 'Tap to pause' : 'Tap to talk live'}
+                  className="w-[210px] h-[210px] sm:w-[230px] sm:h-[230px]"
+                />
+              </div>
+
+              {/* Symmetrical Audio Waveform Bars */}
+              <div className="mt-1 flex items-center justify-center">
+                <LiveWaveformBars
+                  isActive={audioLevelSource === 'microphone' || audioLevelSource === 'playback' || isListening || isSpeaking}
+                  audioLevel={audioLevel}
+                  height={20}
+                  barCount={21}
+                  colorTheme="gradient"
+                  className="h-5"
+                />
+              </div>
+
+              {/* Live Speech Transcription / Prompt Feedback */}
+              <div className="mt-2 text-center max-w-lg px-4">
+                <p className="text-[14px] sm:text-[15px] font-bold text-white tracking-tight leading-snug" aria-live="polite">
+                  {isListening && (interimTranscript || finalTranscript) ? (
+                    <span className="text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.6)]">
+                      "{interimTranscript || finalTranscript}"
+                    </span>
+                  ) : isListening ? (
+                    <span className="text-cyan-400/90 font-medium animate-pulse">
+                      Listening to you... speak naturally
+                    </span>
+                  ) : isSpeaking ? (
+                    <span className="text-indigo-200">
+                      {streamingText ? (
+                        <span className="line-clamp-2">"{streamingText.slice(0, 110)}..."</span>
+                      ) : (
+                        'FinSight is speaking · Tap orb to interrupt'
+                      )}
+                    </span>
+                  ) : isProcessing ? (
+                    <span className="text-indigo-300 flex items-center justify-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
+                      Reasoning with database & tools...
+                    </span>
+                  ) : (
+                    <span className="text-slate-300 font-medium">
+                      {isContinuousMode ? 'Hands-free active · Speak anytime' : 'Tap the 3D sphere or speak anytime'}
+                    </span>
+                  )}
+                </p>
+                <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                  {audioLevelSource === 'microphone' 
+                    ? '● Live microphone input reactive' 
+                    : audioLevelSource === 'playback' 
+                    ? '● Live Gnani speech playback' 
+                    : isContinuousMode 
+                    ? '● Continuous conversation ready' 
+                    : '● Click 3D sphere to talk live'}
+                </span>
+              </div>
+            </div>
+
             {/* Action Prompt Chips */}
-            <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1 scrollbar-none">
+            <div className="flex items-center justify-center gap-2 pt-2 border-t border-slate-800/80 overflow-x-auto pb-1 scrollbar-none">
               <button
                 onClick={() =>
                   handleChipClick(

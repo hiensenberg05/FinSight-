@@ -38,6 +38,17 @@
   }
 }
 
+/* 3D Ambient Atmosphere & Micro-Grid Texture */
+.bg-ambient-3d {
+  background-color: #0B0F17;
+  background-image: 
+    radial-gradient(circle at 50% -100px, rgba(99, 102, 241, 0.18), transparent 600px),
+    radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.10), transparent 450px),
+    radial-gradient(circle at 90% 70%, rgba(168, 85, 247, 0.08), transparent 450px),
+    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
+}
+
 /* Enforce tabular-nums across all currency and numbers - NO monospace font */
 .tabular-nums, .tabular-numbers {
   font-family: 'Inter', system-ui, -apple-system, sans-serif !important;

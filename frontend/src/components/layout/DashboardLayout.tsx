@@ -47,7 +47,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   ];
 
   return (
-    <div className="relative h-[100dvh] h-screen w-screen bg-[#0B0F17] text-white overflow-hidden select-none font-sans flex">
+    <div className="relative h-[100dvh] h-screen w-screen bg-ambient-3d text-white overflow-hidden select-none font-sans flex">
       {/* =========================================================================
           1. Left Sidebar: Fixed ~240px
          ========================================================================= */}
@@ -156,9 +156,9 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       {/* =========================================================================
           2. Main Application Workspace Area
          ========================================================================= */}
-      <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden bg-[#0B0F17]">
+      <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden bg-transparent">
         {/* Top Header Navbar: Search + Status Badge + Bell + User Capsule */}
-        <header className="h-12 px-6 flex items-center justify-between flex-shrink-0 bg-[#0B0F17] relative z-30 border-b border-slate-800/80">
+        <header className="h-12 px-6 flex items-center justify-between flex-shrink-0 bg-[#0B0F17]/80 backdrop-blur-xl relative z-30 border-b border-slate-800/80">
           {/* Left / Status Badge */}
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#111622] border border-slate-700/80 text-[11px] font-medium text-slate-300">
