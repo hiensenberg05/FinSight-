@@ -176,8 +176,10 @@ class WorkingMemoryManager:
 
         # Pattern 2: Contextual drill-down on spending drivers
         # e.g., "first one", "pehle wala", "swiggy wala", "second one", "dusra wala"
-        if topic == ActiveTopic.SPEND_ANALYSIS:
-            if any(w in lower for w in ("first", "pehle", "1st", "number one", "swiggy", "dining", "पहला", "पहला वाला")):
+        # Must NOT trigger for What-If simulation queries ("cut", "percent", "agar", "kam kar", "अगर")
+        has_sim_word = any(w in lower for w in ("cut", "percent", "%", "reduce", "कम", "agar", "अगर", "save", "बचत", "क्या होगा", "what if", "simulate"))
+        if topic == ActiveTopic.SPEND_ANALYSIS and not has_sim_word:
+            if any(w in lower for w in ("first one", "the first", "pehle wala", "pehla wala", "1st one", "first driver", "swiggy wala", "पहला वाला", "पहला ड्राइवर")):
                 return {
                     "category": "analytics_explorer",
                     "confidence": 0.95,
@@ -186,7 +188,7 @@ class WorkingMemoryManager:
                     "extracted_args": {"category": "Food & Dining"},
                     "rationale": "Resolved pronoun 'first one' to Food & Dining driver from active spend analysis topic.",
                 }
-            if any(w in lower for w in ("second", "dusra", "2nd", "croma", "electronics", "दूसरा", "दूसरा वाला")):
+            if any(w in lower for w in ("second one", "the second", "dusra wala", "doosra wala", "2nd one", "croma wala", "दूसरा वाला", "दूसरा ड्राइवर")):
                 return {
                     "category": "forensic_anomaly",
                     "confidence": 0.95,

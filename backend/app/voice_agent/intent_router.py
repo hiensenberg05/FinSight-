@@ -336,22 +336,29 @@ class IntentRouter:
         # TIER 2.5: Browser Portal Automation & Forensic Receipts
         # (Triggered ONLY for explicit receipt requests or confirmed offers)
         # -----------------------------------------------------------------
-        if working_memory and working_memory.pending_portal_offer:
-            is_affirmative = any(
-                w in lower
-                for w in (
-                    "yes", "yeah", "sure", "show me", "open it", "open receipt", "verify it",
-                    "check it", "haan", "ha", "dikhao", "batao", "karo", "check karo",
-                    "khol ke dikhao", "receipt dikhao", "bill dikhao", "verify karo", "portal kholo",
-                    "open karo", "dikhao", "kholo",
-                    # Devanagari Hindi variants
-                    "हाँ", "हां", "दिखाओ", "दिखाइए", "दिखा", "खोलो", "खोल", "ओपन", "ओपन करो",
-                    "करो", "चेक करो", "चेक", "खोल के दिखाओ", "दिखा दो", "अच्छा दिखाओ", "बिल दिखाओ",
-                    "रसीद दिखाओ", "रसीद", "पोर्टल खोलो", "खोल दिया", "खोल दो"
+        if working_memory and getattr(working_memory, "pending_portal_offer", None):
+            has_new_intent = any(
+                w in lower for w in (
+                    "what", "kya", "kyu", "why", "how", "agar", "अगर", "cut", "percent", "%",
+                    "प्रतिशत", "कम", "save", "बचत", "simulate", "balance", "budget", "bill",
+                    "goal", "forecast", "spend", "expense", "खर्च", "कितना", "क्या होगा"
                 )
-            ) or ("receipt" in lower and any(w in lower for w in ("open", "show", "view", "khol", "kholo", "dikhao", "खोलो", "दिखाओ", "करो", "ओपन")))
-            if is_affirmative and not any(w in lower for w in ("balance", "kitna bacha", "kiraya", "groceries", "rent", "kya bataun", "kya batao")):
+            )
+            is_affirmative = not has_new_intent and (
+                any(
+                    re.search(r"\b" + re.escape(w) + r"\b", lower)
+                    for w in (
+                        "yes", "yeah", "sure", "show me", "open it", "open receipt", "verify it",
+                        "check it", "haan", "ha", "dikhao", "kholo", "open karo", "receipt dikhao",
+                        "bill dikhao", "portal kholo", "हाँ", "हां", "दिखाओ", "दिखाइए", "खोलो",
+                        "खोल के दिखाओ", "दिखा दो", "अच्छा दिखाओ", "बिल दिखाओ", "रसीद दिखाओ", "पोर्टल खोलो"
+                    )
+                )
+                or ("receipt" in lower and any(w in lower for w in ("open", "show", "view", "khol", "kholo", "dikhao", "खोलो", "दिखाओ")))
+            )
+            if is_affirmative:
                 offer = working_memory.pending_portal_offer
+                working_memory.pending_portal_offer = None
                 return IntentClassificationResult(
                     category=IntentCategory.PORTAL_AUTOMATION,
                     confidence=0.98,
@@ -360,6 +367,8 @@ class IntentRouter:
                     extracted_args=offer.get("args", {}),
                     rationale="User confirmed visual portal drilldown offer from active conversational working memory.",
                 )
+            elif has_new_intent:
+                working_memory.pending_portal_offer = None
 
         has_receipt_intent = (
             ("receipt" in lower or "रसीद" in lower or "invoice" in lower or "swiggy" in lower or "स्विगी" in lower)
@@ -505,13 +514,36 @@ class IntentRouter:
             )
 
         # 4C. Predictive Advisory: What-If Discretionary Simulation
-        if any(w in lower for w in ("what if", "what-if", "reduce dining", "cut dining", "if i reduce", "if i cut", "how much will i save", "save if i cut", "save if i reduce", "कम करें", "बचत होगी", "कटौती")):
-            m = re.search(r'(\d+(?:\.\d+)?)\s*(?:%|percent)', lower)
-            pct = float(m.group(1)) if m else 20.0
-            cat = "Food & Dining" if ("food" in lower or "dining" in lower or "खाना" in lower) else "Shopping"
+        is_what_if = any(w in lower for w in (
+            "what if", "what-if", "what, agar", "what, अगर", "agar main", "agar mein",
+            "reduce", "cut", "if i reduce", "if i cut", "how much will i save",
+            "save if i cut", "save if i reduce", "अगर मैं", "अगर हम", "कम कर",
+            "कटौती", "बचत होगी", "कम करें", "क्या होगा", "kitna bachega", "kitni bachat",
+            "dining ka cut", "dining का cut", "cut kar", "kam kar", "kam kar doon",
+            "percent kam", "percent cut"
+        ))
+        if is_what_if:
+            hindi_nums = {
+                "दस": "10", "बीस": "20", "पच्चीस": "25", "तीस": "30",
+                "पैंतीस": "35", "चालीस": "40", "पचास": "50",
+                "ten": "10", "twenty": "20", "twenty-five": "25", "thirty": "30"
+            }
+            norm_lower = lower
+            for h_word, d_str in hindi_nums.items():
+                norm_lower = re.sub(r"\b" + re.escape(h_word) + r"\b", d_str, norm_lower)
+            m = re.search(r'(\d+(?:\.\d+)?)\s*(?:%|percent|प्रतिशत|टका)?', norm_lower)
+            pct = 20.0
+            if m:
+                try:
+                    val = float(m.group(1))
+                    if 0 < val <= 100:
+                        pct = val
+                except ValueError:
+                    pass
+            cat = "Food & Dining" if any(w in lower for w in ("food", "dining", "खाना", "खाने", "swiggy", "zomato", "restaurant")) else "Shopping"
             return IntentClassificationResult(
                 category=IntentCategory.PREDICTIVE_ADVISORY,
-                confidence=0.95,
+                confidence=0.96,
                 intent_name="simulate_reduction",
                 target_tool="simulate_spending_reduction",
                 extracted_args={"category": cat, "reduction_pct": pct, "goal_name": "Vacation Fund" if "vacation" in lower else None},
