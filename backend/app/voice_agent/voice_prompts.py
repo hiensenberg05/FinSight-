@@ -217,6 +217,26 @@ class VoiceSpeechPrompter:
                 )
             return visual, spoken
 
+        # Acknowledgment & Affirmation ("OK", "Okay", "Got it", "Understood", "Theek hai")
+        if re.search(r"^(?:ok|okay|got\s+it|understood|alright|cool|theek\s+hai|accha|sounds\s+good|perfect|great|done|ठीक\s+है|अच्छा)[.!]?\s*$", lower) or any(w in lower for w in ("got it", "understood", "all right")):
+            if language == "hi":
+                spoken = f"Theek hai {user_name}! Jab bhi koi naya kharcha, bill ya savings plan dekhna ho, bas bataiye."
+                visual = f"**Theek hai {user_name}!** Let me know whenever you'd like to check another expense, review bills, or set a savings goal."
+            else:
+                spoken = f"Understood, {user_name}! Let me know whenever you'd like to check another expense, review bills, or explore savings goals."
+                visual = f"**Understood, {user_name}!** Let me know whenever you'd like to check another expense, review bills, or explore savings goals."
+            return visual, spoken
+
+        # "How are you doing" / "Hey Finch, how are you doing?"
+        if any(w in lower for w in ("how are you", "how're you", "how you doing", "kaise ho", "kya haal", "कैसे हो", "क्या हाल")):
+            if language == "hi":
+                spoken = f"Namaste {user_name}! Main bilkul badhiya hoon, poochne ke liye shukriya. Aaj main aapke finances, bills ya kharche me kaise madad kar sakta hoon?"
+                visual = f"**Namaste {user_name}!** Main bilkul badhiya hoon, poochne ke liye shukriya. How can I assist you with your finances today?"
+            else:
+                spoken = f"Hello {user_name}! I'm doing great, thank you for asking. I'm ready to inspect your finances, track spending, or check any bills. What's on your mind today?"
+                visual = f"**Hello {user_name}!** I'm doing great, thank you for asking. I'm ready to inspect your finances, track spending, or check any bills. What's on your mind today?"
+            return visual, spoken
+
         # Pure greeting
         if language == "hi":
             spoken = f"Namaste {user_name}! Aapse baat karke bahut accha laga. Aaj main aapke finances me kaise madad kar sakta hoon?"

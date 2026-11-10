@@ -6,7 +6,7 @@ Never performs simulated external bank transfers; strictly manages authorized le
 
 import json
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, date
 from typing import Dict, Any, Optional, List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, and_, update
@@ -186,169 +186,183 @@ class ActionOperatorService:
         before_state = {}
         after_state = {}
 
-        # ---------------------------------------------------------
-        # Mutation 1: set_category_budget
-        # ---------------------------------------------------------
-        if action.action_type == "set_category_budget":
-            cat = params.get("category", "General")
-            amount = float(params.get("amount", 0.0))
-            limit_minor = int(round(amount * 100))
+        try:
+            # ---------------------------------------------------------
+            # Mutation 1: set_category_budget
+            # ---------------------------------------------------------
+            if action.action_type == "set_category_budget":
+                cat = params.get("category", "General")
+                amount = float(params.get("amount", 0.0))
+                limit_minor = int(round(amount * 100))
 
-            b_stmt = select(Budget).where(
-                and_(Budget.user_id == user_id, Budget.category_name.ilike(f"%{cat}%"))
-            )
-            budget = (await db.execute(b_stmt)).scalars().first()
-
-            if budget:
-                before_state = {
-                    "id": budget.id,
-                    "category": budget.category_name,
-                    "limit_minor": budget.limit_minor,
-                }
-                budget.limit_minor = limit_minor
-                budget.updated_at = utc_now()
-                after_state = {
-                    "id": budget.id,
-                    "category": budget.category_name,
-                    "limit_minor": budget.limit_minor,
-                }
-            else:
-                budget = Budget(
-                    user_id=user_id,
-                    category_name=cat,
-                    limit_minor=limit_minor,
-                    spent_minor=0,
-                    period="2025-02",
+                b_stmt = select(Budget).where(
+                    and_(Budget.user_id == user_id, Budget.category_name.ilike(f"%{cat}%"))
                 )
-                db.add(budget)
+                budget = (await db.execute(b_stmt)).scalars().first()
+
+                if budget:
+                    before_state = {
+                        "id": budget.id,
+                        "category": budget.category_name,
+                        "limit_minor": budget.limit_minor,
+                    }
+                    budget.limit_minor = limit_minor
+                    after_state = {
+                        "id": budget.id,
+                        "category": budget.category_name,
+                        "limit_minor": budget.limit_minor,
+                    }
+                else:
+                    budget = Budget(
+                        user_id=user_id,
+                        category_name=cat,
+                        limit_minor=limit_minor,
+                        period="monthly",
+                    )
+                    db.add(budget)
+                    await db.flush()
+                    after_state = {
+                        "id": budget.id,
+                        "category": budget.category_name,
+                        "limit_minor": budget.limit_minor,
+                    }
+
+            # ---------------------------------------------------------
+            # Mutation 2: create_savings_goal
+            # ---------------------------------------------------------
+            elif action.action_type == "create_savings_goal":
+                name = params.get("name", "Savings Goal")
+                target = float(params.get("target_amount", 0.0))
+                target_minor = int(round(target * 100))
+                target_date_str = params.get("target_date", "2027-06-30")
+                target_date_val = None
+                if target_date_str:
+                    try:
+                        target_date_val = datetime.strptime(str(target_date_str)[:10], "%Y-%m-%d").date()
+                    except Exception:
+                        target_date_val = None
+
+                goal = SavingsGoal(
+                    user_id=user_id,
+                    name=name,
+                    target_amount_minor=target_minor,
+                    current_amount_minor=0,
+                    currency="INR",
+                    target_date=target_date_val,
+                    status="active",
+                )
+                db.add(goal)
                 await db.flush()
                 after_state = {
-                    "id": budget.id,
-                    "category": budget.category_name,
-                    "limit_minor": budget.limit_minor,
+                    "id": goal.id,
+                    "name": goal.name,
+                    "target_amount_minor": goal.target_amount_minor,
                 }
 
-        # ---------------------------------------------------------
-        # Mutation 2: create_savings_goal
-        # ---------------------------------------------------------
-        elif action.action_type == "create_savings_goal":
-            name = params.get("name", "Savings Goal")
-            target = float(params.get("target_amount", 0.0))
-            target_minor = int(round(target * 100))
-            target_date_str = params.get("target_date", "2027-06-30")
+            # ---------------------------------------------------------
+            # Mutation 3: update_savings_goal
+            # ---------------------------------------------------------
+            elif action.action_type == "update_savings_goal":
+                goal_id = params.get("goal_id") or action.target_resource_id
+                additional = float(params.get("additional_amount", 0.0))
+                add_minor = int(round(additional * 100))
 
-            goal = SavingsGoal(
+                g_stmt = select(SavingsGoal).where(
+                    and_(SavingsGoal.id == goal_id, SavingsGoal.user_id == user_id)
+                )
+                goal = (await db.execute(g_stmt)).scalars().first()
+                if goal:
+                    before_state = {"id": goal.id, "current_amount_minor": goal.current_amount_minor}
+                    goal.current_amount_minor += add_minor
+                    if goal.current_amount_minor >= goal.target_amount_minor:
+                        goal.status = "completed"
+                    after_state = {"id": goal.id, "current_amount_minor": goal.current_amount_minor, "status": goal.status}
+
+            # ---------------------------------------------------------
+            # Mutation 4: update_transaction_category
+            # ---------------------------------------------------------
+            elif action.action_type == "update_transaction_category":
+                tx_id = params.get("transaction_id") or action.target_resource_id
+                new_cat = params.get("new_category")
+
+                t_stmt = select(Transaction).where(
+                    and_(Transaction.id == tx_id, Transaction.user_id == user_id)
+                )
+                tx = (await db.execute(t_stmt)).scalars().first()
+                if tx:
+                    before_state = {"id": tx.id, "category_name": tx.category_name}
+                    tx.category_name = new_cat
+                    after_state = {"id": tx.id, "category_name": tx.category_name}
+
+            # ---------------------------------------------------------
+            # Mutation 5: review_anomaly
+            # ---------------------------------------------------------
+            elif action.action_type == "review_anomaly":
+                tx_id = params.get("transaction_id") or action.target_resource_id
+                t_stmt = select(Transaction).where(
+                    and_(Transaction.id == tx_id, Transaction.user_id == user_id)
+                )
+                tx = (await db.execute(t_stmt)).scalars().first()
+                if tx:
+                    before_state = {"id": tx.id, "is_anomaly": tx.is_anomaly}
+                    tx.is_anomaly = False
+                    tx.anomaly_reason = "Reviewed and marked as legitimate by user"
+                    after_state = {"id": tx.id, "is_anomaly": False}
+
+            # ---------------------------------------------------------
+            # Mutation 6: update_recurring_payment
+            # ---------------------------------------------------------
+            elif action.action_type == "update_recurring_payment":
+                bill_id = params.get("bill_id") or action.target_resource_id
+                auto_pay = params.get("auto_pay")
+
+                r_stmt = select(RecurringPayment).where(
+                    and_(RecurringPayment.id == bill_id, RecurringPayment.user_id == user_id)
+                )
+                bill = (await db.execute(r_stmt)).scalars().first()
+                if bill:
+                    before_state = {"id": bill.id, "auto_pay": bill.auto_pay}
+                    if auto_pay is not None:
+                        bill.auto_pay = bool(auto_pay)
+                    after_state = {"id": bill.id, "auto_pay": bill.auto_pay}
+
+            # Mark action executed
+            action.status = "executed"
+            action.executed_at = utc_now()
+
+            # Audit log creation
+            audit = ActionAuditLog(
                 user_id=user_id,
-                name=name,
-                target_amount_minor=target_minor,
-                current_amount_minor=0,
-                target_date_str=target_date_str,
-                status="in_progress",
+                action_id=action.id,
+                action_type=action.action_type,
+                actor=actor,
+                ip_address=ip_address,
+                before_state_json=json.dumps(before_state),
+                after_state_json=json.dumps(after_state),
+                executed_at=utc_now(),
             )
-            db.add(goal)
-            await db.flush()
-            after_state = {
-                "id": goal.id,
-                "name": goal.name,
-                "target_amount_minor": goal.target_amount_minor,
+            db.add(audit)
+            await db.commit()
+
+            return {
+                "success": True,
+                "action_id": action.id,
+                "action_type": action.action_type,
+                "description": action.description,
+                "status": "executed",
+                "executed_at": action.executed_at.isoformat(),
+                "before_state": before_state,
+                "after_state": after_state,
+                "message": f"Successfully completed: {action.description}",
             }
-
-        # ---------------------------------------------------------
-        # Mutation 3: update_savings_goal
-        # ---------------------------------------------------------
-        elif action.action_type == "update_savings_goal":
-            goal_id = params.get("goal_id") or action.target_resource_id
-            additional = float(params.get("additional_amount", 0.0))
-            add_minor = int(round(additional * 100))
-
-            g_stmt = select(SavingsGoal).where(
-                and_(SavingsGoal.id == goal_id, SavingsGoal.user_id == user_id)
-            )
-            goal = (await db.execute(g_stmt)).scalars().first()
-            if goal:
-                before_state = {"id": goal.id, "current_amount_minor": goal.current_amount_minor}
-                goal.current_amount_minor += add_minor
-                if goal.current_amount_minor >= goal.target_amount_minor:
-                    goal.status = "completed"
-                after_state = {"id": goal.id, "current_amount_minor": goal.current_amount_minor, "status": goal.status}
-
-        # ---------------------------------------------------------
-        # Mutation 4: update_transaction_category
-        # ---------------------------------------------------------
-        elif action.action_type == "update_transaction_category":
-            tx_id = params.get("transaction_id") or action.target_resource_id
-            new_cat = params.get("new_category")
-
-            t_stmt = select(Transaction).where(
-                and_(Transaction.id == tx_id, Transaction.user_id == user_id)
-            )
-            tx = (await db.execute(t_stmt)).scalars().first()
-            if tx:
-                before_state = {"id": tx.id, "category_name": tx.category_name}
-                tx.category_name = new_cat
-                after_state = {"id": tx.id, "category_name": tx.category_name}
-
-        # ---------------------------------------------------------
-        # Mutation 5: review_anomaly
-        # ---------------------------------------------------------
-        elif action.action_type == "review_anomaly":
-            tx_id = params.get("transaction_id") or action.target_resource_id
-            t_stmt = select(Transaction).where(
-                and_(Transaction.id == tx_id, Transaction.user_id == user_id)
-            )
-            tx = (await db.execute(t_stmt)).scalars().first()
-            if tx:
-                before_state = {"id": tx.id, "is_anomaly": tx.is_anomaly}
-                tx.is_anomaly = False
-                tx.anomaly_reason = "Reviewed and marked as legitimate by user"
-                after_state = {"id": tx.id, "is_anomaly": False}
-
-        # ---------------------------------------------------------
-        # Mutation 6: update_recurring_payment
-        # ---------------------------------------------------------
-        elif action.action_type == "update_recurring_payment":
-            bill_id = params.get("bill_id") or action.target_resource_id
-            auto_pay = params.get("auto_pay")
-
-            r_stmt = select(RecurringPayment).where(
-                and_(RecurringPayment.id == bill_id, RecurringPayment.user_id == user_id)
-            )
-            bill = (await db.execute(r_stmt)).scalars().first()
-            if bill:
-                before_state = {"id": bill.id, "auto_pay": bill.auto_pay}
-                if auto_pay is not None:
-                    bill.auto_pay = bool(auto_pay)
-                after_state = {"id": bill.id, "auto_pay": bill.auto_pay}
-
-        # Mark action executed
-        action.status = "executed"
-        action.executed_at = utc_now()
-
-        # Audit log creation
-        audit = ActionAuditLog(
-            user_id=user_id,
-            action_id=action.id,
-            action_type=action.action_type,
-            actor=actor,
-            ip_address=ip_address,
-            before_state_json=json.dumps(before_state),
-            after_state_json=json.dumps(after_state),
-            executed_at=utc_now(),
-        )
-        db.add(audit)
-        await db.commit()
-
-        return {
-            "success": True,
-            "action_id": action.id,
-            "action_type": action.action_type,
-            "description": action.description,
-            "status": "executed",
-            "executed_at": action.executed_at.isoformat(),
-            "before_state": before_state,
-            "after_state": after_state,
-            "message": f"Successfully completed: {action.description}",
-        }
+        except Exception as e:
+            await db.rollback()
+            logger.error(f"[ActionOperator] Failed to execute action {action_id}: {e}", exc_info=True)
+            return {
+                "success": False,
+                "action_id": action_id,
+                "error": f"Database mutation failed: {str(e)}",
+            }
 
     @staticmethod
     async def cancel_action(

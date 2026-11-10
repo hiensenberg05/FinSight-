@@ -357,12 +357,17 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const resumeListeningIfContinuous = () => {
+    setVoiceState('idle');
+    voiceStateRef.current = 'idle';
+    setAudioLevel(0);
+    setAudioLevelSource(null);
+
     if (isContinuousModeRef.current) {
       setTimeout(() => {
-        startListeningRef.current?.();
-      }, 400);
-    } else {
-      setVoiceState('idle');
+        if (isContinuousModeRef.current && !isMicMutedRef.current) {
+          startListeningRef.current?.();
+        }
+      }, 250);
     }
   };
 
@@ -533,12 +538,12 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
               // Play Gnani Timbre audio; do not silently substitute a different browser voice.
               if (isMutedRef.current) {
                 // If muted, do not play audio aloud; immediately complete speaking turn
-                setVoiceState('idle');
                 resumeListeningIfContinuous();
               } else if (msg.audio_streamed) {
                 // The reply has already reached the browser as scheduled PCM chunks.
               } else if (msg.audioBase64) {
                 setVoiceState('speaking');
+                voiceStateRef.current = 'speaking';
                 speechManagerRef.current?.setSpeakingState(true);
                 const audio = new Audio(`data:audio/wav;base64,${msg.audioBase64}`);
                 activeAudioElementRef.current = audio;
@@ -555,18 +560,11 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                   if (requestIdRef.current === msg.request_id || !msg.request_id) resumeListeningIfContinuous();
                 };
                 audio.play().catch(() => {
-                  if (!isMutedRef.current && (requestIdRef.current === msg.request_id || !msg.request_id)) {
-                    stopPlaybackMeter();
-                    setVoiceState('error');
-                    setVoiceError('Gnani audio could not play. The transcript is still available above. Retry or switch to text input.');
-                  } else {
-                    setVoiceState('idle');
-                    resumeListeningIfContinuous();
-                  }
+                  stopPlaybackMeter();
+                  resumeListeningIfContinuous();
                 });
               } else {
-                setVoiceState('error');
-                setVoiceError('Gnani Timbre returned no audio. The transcript is still available above. Retry or switch to text input.');
+                resumeListeningIfContinuous();
               }
               refreshVoiceOperations();
             } else if (msg.type === 'interrupted') {
@@ -707,7 +705,7 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setVoiceError('Microphone is muted. Unmute it before speaking.');
       return;
     }
-    if (voiceState === 'speaking' || voiceState === 'thinking' || voiceState === 'tool_execution') {
+    if (voiceStateRef.current === 'speaking' || activeAudioElementRef.current !== null || getPcmPlayer().isPlaying()) {
       interruptSpeaking();
     }
     getPcmPlayer().unlock();
@@ -717,6 +715,7 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     listeningStartedAtRef.current = performance.now();
     setAudioLevelSource('microphone');
     setVoiceState('listening');
+    voiceStateRef.current = 'listening';
 
     await speechManagerRef.current?.startListening();
   };
@@ -726,9 +725,8 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     speechManagerRef.current?.stopListening();
     setAudioLevel(0);
     setAudioLevelSource(null);
-    if (voiceState === 'listening') {
-      setVoiceState('idle');
-    }
+    setVoiceState('idle');
+    voiceStateRef.current = 'idle';
   };
 
   const toggleListening = () => {
@@ -834,11 +832,11 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.send(JSON.stringify({ type: 'action_confirm', action_id: actionId }));
       }
-      const res = await fetch(`http://localhost:8000/api/v1/actions/${actionId}/confirm`, {
+      const res = await fetch(`${API_BASE}/actions/${actionId}/confirm`, {
         method: 'POST',
       });
-      const data = await res.json();
-      if (data.success) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.success || data.status === 'executed')) {
         setPendingAction((prev) => (prev && prev.action_id === actionId ? { ...prev, status: 'executed' as const } : prev));
         return true;
       }
@@ -853,11 +851,11 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.send(JSON.stringify({ type: 'action_cancel', action_id: actionId }));
       }
-      const res = await fetch(`http://localhost:8000/api/v1/actions/${actionId}/cancel`, {
+      const res = await fetch(`${API_BASE}/actions/${actionId}/cancel`, {
         method: 'POST',
       });
-      const data = await res.json();
-      if (data.success) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.success || data.status === 'cancelled')) {
         setPendingAction((prev) => (prev && prev.action_id === actionId ? { ...prev, status: 'cancelled' as const } : prev));
         return true;
       }

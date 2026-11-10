@@ -29,6 +29,7 @@ import { SlackAlertCard } from '../chat/SlackAlertCard';
 import { SpendingDonutChart } from '../chat/SpendingDonutChart';
 import { useVoice } from '../../voice/VoiceContext';
 import { api } from '../../services/api';
+import { mockHealthMetrics, mockCategorySpending, mockBills } from '../../data/mockFinancialData';
 import { FinancialHealthMetrics, CategorySpending, Transaction, Bill } from '../../types';
 import { formatINR, getTodayFormatted } from '../../utils/formatters';
 
@@ -225,10 +226,42 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
   const chatBottomRef = useRef<HTMLDivElement>(null);
 
   // Real Database State
-  const [healthMetrics, setHealthMetrics] = useState<FinancialHealthMetrics | null>(null);
-  const [categories, setCategories] = useState<CategorySpending[]>([]);
+  const [healthMetrics, setHealthMetrics] = useState<FinancialHealthMetrics | null>(mockHealthMetrics);
+  const [categories, setCategories] = useState<CategorySpending[]>(mockCategorySpending);
   const [recentTxns, setRecentTxns] = useState<Transaction[]>([]);
-  const [bills, setBills] = useState<Bill[]>([]);
+  const [bills, setBills] = useState<Bill[]>(mockBills);
+  const [showSimulator, setShowSimulator] = useState<boolean>(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    api.getHealthMetrics()
+      .then((data) => {
+        if (isMounted && data && typeof data.score === 'number') {
+          setHealthMetrics(data);
+        }
+      })
+      .catch(() => {});
+
+    api.getCategorySpending()
+      .then((data) => {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setCategories(data);
+        }
+      })
+      .catch(() => {});
+
+    api.getBills()
+      .then((data) => {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setBills(data);
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, [pendingAction]);
 
   const isProcessing = voiceState === 'thinking' || voiceState === 'tool_execution';
   const isSpeaking = voiceState === 'speaking';
@@ -758,14 +791,39 @@ export const AIAssistantView: React.FC<AIAssistantViewProps> = ({ onSelectTab })
             </div>
           )}
 
-          {/* Slot 2: Active What-If Interactive Simulation Card */}
-          {activeSimulation && (
+          {/* Slot 2: Active What-If Interactive Simulation Card & Financial Calculator */}
+          {activeSimulation ? (
             <div className="animate-in fade-in slide-in-from-right-4 duration-300">
               <InteractiveSimulationCard
                 initialData={activeSimulation}
                 onSliderChange={adjustSimulationSlider}
               />
             </div>
+          ) : (
+            showSimulator && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+                <InteractiveSimulationCard
+                  initialData={{
+                    simulation_type: 'spend_reduction',
+                    category: 'Dining & Discretionary',
+                    reduction_percentage: 20,
+                    historical_monthly_spend: 14200,
+                    simulated_monthly_spend: 11360,
+                    monthly_savings: 2840,
+                    annualized_savings: 34080,
+                    goal_impact: {
+                      goal_name: 'Emergency Fund',
+                      target_amount: 50000,
+                      remaining_amount: 24000,
+                      baseline_months_to_complete: 4.5,
+                      accelerated_months_to_complete: 3.2,
+                      months_saved: 1.3,
+                    },
+                  }}
+                  onSliderChange={adjustSimulationSlider}
+                />
+              </div>
+            )
           )}
 
           {/* Slot 3: Financial Health Score Meter */}

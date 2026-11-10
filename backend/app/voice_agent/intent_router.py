@@ -68,14 +68,15 @@ class IntentRouter:
 
     GREETING_PATTERNS = [
         r"^(?:hi|hello|hey|namaste|namaskar|pranam|hola|good\s+(?:morning|afternoon|evening|day)|howdy)\b",
+        r"\b(?:hey\s+finch|hi\s+finch|hello\s+finch|finch|hey\s+finsight|hi\s+finsight|hello\s+finsight|finsight)\b",
         r"^(?:नमस्ते|नमस्कार|प्रणाम|हाय|हैलो)\b",
         r"\b(?:just\s+greeting|only\s+greeting|saying\s+hi|saying\s+hello)\b",
-        r"\b(?:how\s+are\s+you|how's\s+it\s+going|how\s+do\s+you\s+do|what's\s+up|kaise\s+ho|kya\s+haal\s+hai|कैसे\s+हो|क्या\s+हाल\s+है)\b",
+        r"\b(?:how\s+are\s+you|how's\s+it\s+going|how\s+do\s+you\s+do|how\s+are\s+you\s+doing|how're\s+you\s+doing|what's\s+up|kaise\s+ho|kya\s+haal\s+hai|कैसे\s+हो|क्या\s+हाल\s+है)\b",
         r"\b(?:who\s+are\s+you|what\s+is\s+your\s+name|introduce\s+yourself|aap\s+kaun\s+ho|tum\s+kaun\s+ho|आप\s+कौन\s+हो|तुम\s+कौन\s+हो)\b",
         r"\b(?:what\s+can\s+you\s+do|how\s+can\s+you\s+help|what\s+are\s+your\s+skills|kya\s+kar\s+sakte\s+ho|क्या\s+कर\s+सकते\s+हो|क्या\s+मदद\s+कर\s+सकते\s+हो)\b",
         r"\b(?:thank\s+you|thanks|thx|cheers|appreciate\s+it|shukriya|dhanyawad|शुक्रिया|धन्यवाद)\b",
         r"\b(?:bye|goodbye|see\s+you|talk\s+later|alvida|अलविदा)\b",
-        r"\b(?:ok|okay|got\s+it|understood|alright|cool|theek\s+hai|accha|ठीक\s+है|अच्छा)\s*$",
+        r"^(?:ok|okay|got\s+it|understood|alright|cool|theek\s+hai|accha|sounds\s+good|perfect|great|done|ठीक\s+है|अच्छा)[.!]?\s*$",
     ]
 
     META_FEEDBACK_PATTERNS = [
@@ -154,31 +155,13 @@ class IntentRouter:
                     w in lower for w in ("balance", "spend", "bought", "budget", "bill", "anomaly", "invest", "forecast", "transaction", "खर्च", "बैलेंस")
                 )
                 if not has_financial_intent:
-                    # FIX 1: If session turn > 1 (history exists or working memory has prior tool),
-                    # do NOT reset the conversation with a canned greeting!
-                    if has_history or (working_memory and working_memory.last_tool):
-                        tool = working_memory.last_tool or "get_spending_summary"
-                        cat = IntentCategory.ANALYTICS_EXPLORER
-                        if tool in ("get_liquidity_buffer", "get_recurring_payments", "get_forecast"):
-                            cat = IntentCategory.CASHFLOW_OBLIGATIONS
-                        elif tool in ("get_budget_plan", "simulate_spending_reduction", "simulate_savings_goal"):
-                            cat = IntentCategory.PREDICTIVE_ADVISORY
-                        elif tool == "find_unusual_transactions":
-                            cat = IntentCategory.FORENSIC_ANOMALY
-                        return IntentClassificationResult(
-                            category=cat,
-                            confidence=0.88,
-                            intent_name="conversational_guidance",
-                            target_tool=tool,
-                            extracted_args={},
-                            rationale="Mid-turn conversational pleasantry during active session; routed to contextual guidance rather than resetting with a greeting.",
-                        )
+                    is_ack = bool(re.search(r"^(?:ok|okay|got\s+it|understood|alright|cool|theek\s+hai|accha|sounds\s+good|perfect|great|done|ठीक\s+है|अच्छा)[.!]?\s*$", lower))
                     return IntentClassificationResult(
                         category=IntentCategory.GREETING_AND_META,
                         confidence=0.98,
-                        intent_name="greeting",
+                        intent_name="acknowledgment" if is_ack else "greeting",
                         target_tool=None,
-                        rationale="User query is a pure conversational greeting or capability inquiry. No SQL calculations required.",
+                        rationale="User query is a pure conversational greeting or acknowledgment. No heavy SQL or DOM scraping calculations required.",
                     )
 
         # -----------------------------------------------------------------
@@ -751,32 +734,12 @@ class IntentRouter:
         has_financial_term = any(w in lower for w in FINANCIAL_KEYWORDS)
 
         if not has_financial_term:
-            # FIX 1: If session turn > 1 (history exists or working memory has a prior tool),
-            # NEVER route to GREETING_AND_META! Route to contextual guidance rather than resetting with a greeting!
-            if has_history or (working_memory and working_memory.last_tool):
-                tool = working_memory.last_tool or "get_spending_summary"
-                cat = IntentCategory.ANALYTICS_EXPLORER
-                if tool in ("get_liquidity_buffer", "get_recurring_payments", "get_forecast"):
-                    cat = IntentCategory.CASHFLOW_OBLIGATIONS
-                elif tool in ("get_budget_plan", "simulate_spending_reduction", "simulate_savings_goal"):
-                    cat = IntentCategory.PREDICTIVE_ADVISORY
-                elif tool == "find_unusual_transactions":
-                    cat = IntentCategory.FORENSIC_ANOMALY
-                return IntentClassificationResult(
-                    category=cat,
-                    confidence=0.82,
-                    intent_name="conversational_guidance",
-                    target_tool=tool,
-                    extracted_args={},
-                    rationale="Ongoing multi-turn conversation with no isolated financial keyword; routed to contextual guidance rather than resetting with a greeting.",
-                )
-
             return IntentClassificationResult(
                 category=IntentCategory.GREETING_AND_META,
                 confidence=0.88,
-                intent_name="conversational_clarification",
+                intent_name="conversational_guidance",
                 target_tool=None,
-                rationale="Query contains no financial terminology in Turn 1; routed to conversational greeting agent to prevent unwanted calculations.",
+                rationale="Query contains no explicit financial terminology; routed to conversational guidance agent to assist user without executing unprompted calculations.",
             )
 
         # Default Fallback for general financial inquiries:
