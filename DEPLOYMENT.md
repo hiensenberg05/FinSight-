@@ -2,14 +2,15 @@
 
 This guide covers deploying **FinSight** to production using **Render** and running locally or on any server using **Docker Compose**.
 
+> [!TIP]
+> **Unified Single-Container Architecture**: FinSight compiles both the **React 19 Frontend SPA** and the **FastAPI Backend + WebSockets** into a **single unified Docker container**. On Render, you only need to deploy **ONE single Web Service**! Everything (UI, REST API, WebSockets, Playwright Chromium) runs seamlessly on a single URL without CORS issues or separate static site builds.
+
 ---
 
 ## 📑 Table of Contents
 1. [Stack Architecture](#stack-architecture)
-2. [Local & Server Deployment with Docker Compose](#local--server-deployment-with-docker-compose)
-3. [Deploying to Render (Recommended Cloud Platform)](#deploying-to-render)
-   - [Method 1: One-Click Render Blueprint (render.yaml)](#method-1-one-click-render-blueprint)
-   - [Method 2: Manual Dashboard Setup (Step-by-Step)](#method-2-manual-dashboard-setup)
+2. [Deploying to Render in 1 Click (Unified Web Service)](#deploying-to-render)
+3. [Local & Server Deployment with Docker Compose](#local--server-deployment-with-docker-compose)
 4. [Environment Variables Reference](#environment-variables-reference)
 5. [Post-Deployment Health & Verification Checklist](#post-deployment-verification)
 6. [Troubleshooting & FAQs](#troubleshooting--faqs)
@@ -22,10 +23,9 @@ This guide covers deploying **FinSight** to production using **Render** and runn
 flowchart LR
     Browser["User Browser / Client"]
     
-    subgraph Cloud ["Render Cloud Infrastructure"]
-        Frontend["finsight-web\n(React 19 + Vite Static Site / CDN)"]
-        Backend["finsight-api\n(FastAPI + Playwright + Python 3.11)"]
-        Database[("finsight-db\n(Managed PostgreSQL 16)")]
+    subgraph Cloud ["Render Cloud (Single Web Service)"]
+        Unified["finsight-app\n(Unified Docker Container: React SPA + FastAPI + WebSockets + Playwright)"]
+        Database[("finsight-db\n(PostgreSQL or Embedded SQLite)")]
     end
 
     subgraph External ["External Services"]
@@ -34,13 +34,12 @@ flowchart LR
         Slack["Slack Bot & Webhooks"]
     end
 
-    Browser -- HTTPS (Static UI) --> Frontend
-    Browser -- HTTPS / REST (/api/v1) --> Backend
-    Browser -- WSS Full-Duplex (/ws/voice) --> Backend
-    Backend -- AsyncPG SQL --> Database
-    Backend -- Audio PCM Stream --> Gnani
-    Backend -- Reasoning Queries --> Groq
-    Backend -- Interactive Block Kit --> Slack
+    Browser -- HTTPS (Static UI & REST API) --> Unified
+    Browser -- WSS Full-Duplex (/ws/voice) --> Unified
+    Unified -- Deterministic SQL --> Database
+    Unified -- Audio PCM Stream --> Gnani
+    Unified -- Reasoning Queries --> Groq
+    Unified -- Interactive Block Kit --> Slack
 ```
 
 FinSight is composed of three interconnected services:

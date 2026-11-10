@@ -129,8 +129,31 @@ export const sampleVoicePrompts = [
   'What bills are due soon?',
 ];
 
-const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/voice';
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+const getEffectiveWsUrl = (): string => {
+  if (import.meta.env.VITE_WS_URL) return import.meta.env.VITE_WS_URL;
+  if (typeof window !== 'undefined') {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    if (window.location.port === '5173') {
+      return `${protocol}//${window.location.hostname}:8000/ws/voice`;
+    }
+    return `${protocol}//${window.location.host}/ws/voice`;
+  }
+  return 'ws://localhost:8000/ws/voice';
+};
+
+const getEffectiveApiBase = (): string => {
+  if (import.meta.env.VITE_API_BASE_URL) return import.meta.env.VITE_API_BASE_URL;
+  if (typeof window !== 'undefined') {
+    if (window.location.port === '5173') {
+      return `http://${window.location.hostname}:8000/api/v1`;
+    }
+    return `${window.location.origin}/api/v1`;
+  }
+  return 'http://localhost:8000/api/v1';
+};
+
+const WS_URL = getEffectiveWsUrl();
+const API_BASE = getEffectiveApiBase();
 
 export const getOrCreateClientId = (): string => {
   try {

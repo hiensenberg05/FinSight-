@@ -1,24 +1,14 @@
 # FinSight Render Blueprint Specification
-# Deploy all services (Managed PostgreSQL, FastAPI Backend, React Static Site) with one click
+# Deploys Unified Full-Stack Service (React SPA + FastAPI Backend + Voice WebSockets + Playwright)
 version: "1"
 
-databases:
-  - name: finsight-db
-    databaseName: finsight
-    user: finsight_user
-    plan: free
-    region: oregon # or singapore / frankfurt
-
 services:
-  # ========================================================
-  # FinSight AI & Voice Gateway Service
-  # ========================================================
   - type: web
-    name: finsight-api
+    name: finsight-app
     runtime: docker
-    dockerfilePath: ./backend/Dockerfile
+    dockerfilePath: ./Dockerfile
     dockerContext: .
-    plan: starter # or free (starter recommended for Playwright headless browser & audio processing)
+    plan: starter # starter recommended for Playwright headless browser; free works for testing
     region: oregon
     healthCheckPath: /health
     envVars:
@@ -28,10 +18,6 @@ services:
         value: production
       - key: DEBUG
         value: "false"
-      - key: DATABASE_URL
-        fromDatabase:
-          name: finsight-db
-          property: connectionString
       - key: GNANI_API_KEY
         sync: false
       - key: GROQ_API_KEY
@@ -52,22 +38,3 @@ services:
         value: "#engineering-inventory-tracker"
       - key: SECRET_KEY
         generateValue: true
-
-  # ========================================================
-  # FinSight Responsive Dashboard Static Site
-  # ========================================================
-  - type: web
-    name: finsight-web
-    runtime: static
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    envVars:
-      - key: VITE_API_BASE_URL
-        value: https://finsight-api.onrender.com/api/v1
-      - key: VITE_WS_URL
-        value: wss://finsight-api.onrender.com/ws/voice

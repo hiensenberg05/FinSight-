@@ -15,7 +15,17 @@ const FRAME_BYTES = FRAME_SAMPLES * 2;
 
 function speechSocketUrl(language: string, sampleRate: number): string {
   const configured = import.meta.env.VITE_WS_URL as string | undefined;
-  const base = configured || `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.hostname}:8000/ws/voice`;
+  let base = configured;
+  if (!base && typeof window !== 'undefined') {
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    if (window.location.port === '5173') {
+      base = `${protocol}://${window.location.hostname}:8000/ws/voice`;
+    } else {
+      base = `${protocol}://${window.location.host}/ws/voice`;
+    }
+  } else if (!base) {
+    base = 'ws://localhost:8000/ws/voice';
+  }
   const endpoint = base.replace(/\/$/, '').replace(/\/ws\/voice(?:\/stt)?$/, '/ws/voice/stt');
   const query = new URLSearchParams({ language, sample_rate: String(sampleRate) });
   return `${endpoint}?${query.toString()}`;

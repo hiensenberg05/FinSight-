@@ -20,7 +20,18 @@ import {
   mockSavingsGoals,
 } from '../data/mockFinancialData';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+const getEffectiveApiBase = (): string => {
+  if (import.meta.env.VITE_API_BASE_URL) return import.meta.env.VITE_API_BASE_URL;
+  if (typeof window !== 'undefined') {
+    if (window.location.port === '5173') {
+      return `http://${window.location.hostname}:8000/api/v1`;
+    }
+    return `${window.location.origin}/api/v1`;
+  }
+  return 'http://localhost:8000/api/v1';
+};
+
+const API_BASE = getEffectiveApiBase();
 
 async function safeFetch<T>(endpoint: string, fallback: T, options?: RequestInit): Promise<T> {
   try {

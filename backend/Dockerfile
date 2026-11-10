@@ -1,7 +1,30 @@
-# FinSight Backend Dockerfile
+# ========================================================
+# FinSight Unified Full-Stack Dockerfile
+# Builds React Frontend + FastAPI Backend in a Single Container
+# ========================================================
+
+# --------------------------------------------------------
+# Stage 1: Build React 19 / Vite Frontend SPA
+# --------------------------------------------------------
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /build
+
+# Copy dependency manifests
+COPY frontend/package*.json ./
+RUN npm ci || npm install
+
+# Copy frontend source
+COPY frontend ./
+
+# Build production bundle into /build/dist
+RUN npm run build
+
+# --------------------------------------------------------
+# Stage 2: Production ASGI Server (Python 3.11 + Playwright)
+# --------------------------------------------------------
 FROM python:3.11-slim
 
-# Prevent Python from writing .pyc and enable buffer-less stdout
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONPATH=/app \
@@ -9,7 +32,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Install system dependencies for Playwright, networking, and system libraries
+# Install system dependencies for Playwright headless Chromium
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
@@ -29,24 +52,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libasound2 \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY backend/requirements.txt /app/backend/requirements.txt
+# Install Python requirements
+COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r /app/backend/requirements.txt
+    pip install --no-cache-dir -r /app/requirements.txt
 
-# Install Playwright browser binary
+# Install Playwright Chromium browser binary
 RUN playwright install chromium
 
-# Copy backend application source
+# Copy backend source code & config
 COPY backend /app/backend
 COPY alembic.ini /app/alembic.ini
 
-# Expose backend service port
+# Copy compiled frontend SPA bundle into /app/frontend/dist
+COPY --from=frontend-builder /build/dist /app/frontend/dist
+
 EXPOSE 8000
 
-# Health check against native /health endpoint
+# Healthcheck against /health endpoint
 HEALTHCHECK --interval=15s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
-# Start Uvicorn ASGI server with dynamic port support (e.g. for Render $PORT)
+# Start Uvicorn ASGI server with dynamic cloud $PORT binding
 CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
