@@ -3,6 +3,8 @@
 > **Autonomous Voice-First Financial Intelligence Co-Pilot**  
 > *Zero-Hallucination SQL Grounding · Playwright Browser Forensics · Dynamic Slack Sentinel · Bilingual Voice AI*
 
+[![Solution Pitch](https://img.shields.io/badge/Solution_Pitch-1_Page_Overview-purple.svg)](SOLUTION.md)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-finsight--k6ud.onrender.com-blue.svg)](https://finsight-k6ud.onrender.com)
 [![Python](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-19.0-61DAFB.svg)](https://react.dev/)
@@ -11,6 +13,9 @@
 [![Slack](https://img.shields.io/badge/Slack-Block_Kit_Sentinel-4A154B.svg)](https://slack.com/)
 [![Tests](https://img.shields.io/badge/Tests-40%2F40_Passing-brightgreen.svg)]()
 [![Technical Report](https://img.shields.io/badge/Technical_Report-PDF_Download-red.svg)](FinSight_Technical_Report.pdf)
+
+> 📄 **Executive Solution Pitch**: Read the 1-page overview in [**`SOLUTION.md`**](SOLUTION.md).  
+> 🌐 **Live Cloud Deployment**: [https://finsight-k6ud.onrender.com](https://finsight-k6ud.onrender.com)
 
 ---
 
